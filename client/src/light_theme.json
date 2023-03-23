@@ -1,0 +1,9 @@
+{
+  "token": {
+    "colorPrimaryBg": "#FFFFFF",
+    "colorPrimary": "#484F58",
+    "colorPrimaryText": "#F7EDCF",
+    "colorPrimaryTextHover": "#F7EDCF",
+    "colorPrimaryActive": "#E98996"
+  }
+}
