@@ -48,3 +48,5 @@ const typeDefs = gql`
     SaveReadme(repoId: ID!, readmeContent: String!): Readme
   }
 `;
+
+module.exports = typeDefs;
