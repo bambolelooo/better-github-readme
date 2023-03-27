@@ -52,6 +52,7 @@ export default function EditorPage(props) {
                     textareaValue={textareaValue}
                     setTextareaValue={setTextareaValue}
                     textareaRef={textareaRef}
+                    darkTheme={darkTheme}
                 />
             </section>
         </main>

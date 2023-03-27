@@ -4,8 +4,7 @@ import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 export default function TextEditor(props) {
-    const { textareaValue, setTextareaValue, textareaRef, togglePreview } =
-        props
+    const { textareaValue, setTextareaValue, textareaRef, darkTheme } = props
     const [preview, setPreview] = useState(false)
     const [font, setFont] = useState('JetBrains Mono')
     function addSymbolsBeforeAndAfter(symbols) {
@@ -140,16 +139,54 @@ export default function TextEditor(props) {
                     ref={textareaRef}
                     style={{
                         fontFamily: `${font}`,
-                        fontSize: '18px',
+                        fontSize: '16px',
                         padding: '10px',
                         borderRadius: '15px',
-                        backgroundColor: '#484F58',
+                        backgroundColor: `${darkTheme ? '#0D1117' : '#484F58'}`,
                         color: '#F7EDCF',
                     }}
                 ></textarea>
             ) : (
                 <div className={styles.markdownWrapper}>
-                    <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+                    <ReactMarkdown
+                        rehypePlugins={[rehypeRaw]}
+                        components={{
+                            h3: ({ node, ...props }) => {
+                                const child = node.children[0]
+                                console.log(node)
+                                return (
+                                    <h3
+                                        id={`${child.value
+                                            .toLowerCase()
+                                            .replace(/ /g, '-')}`}
+                                        {...props}
+                                    />
+                                )
+                            },
+                            h2: ({ node, ...props }) => {
+                                const child = node.children[0]
+                                return (
+                                    <h2
+                                        id={`${child.value
+                                            .toLowerCase()
+                                            .replace(/ /g, '-')}`}
+                                        {...props}
+                                    />
+                                )
+                            },
+                            h1: ({ node, ...props }) => {
+                                const child = node.children[0]
+                                return (
+                                    <h1
+                                        id={`${child.value
+                                            .toLowerCase()
+                                            .replace(/ /g, '-')}`}
+                                        {...props}
+                                    />
+                                )
+                            },
+                        }}
+                    >
                         {textareaValue}
                     </ReactMarkdown>
                 </div>
