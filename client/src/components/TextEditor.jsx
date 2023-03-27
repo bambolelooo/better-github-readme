@@ -4,7 +4,13 @@ import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 export default function TextEditor(props) {
-    const { textareaValue, setTextareaValue, textareaRef, darkTheme } = props
+    const {
+        textareaValue,
+        setTextareaValue,
+        textareaRef,
+        darkTheme,
+        handleUndo,
+    } = props
     const [preview, setPreview] = useState(false)
     const [font, setFont] = useState('JetBrains Mono')
     function addSymbolsBeforeAndAfter(symbols) {
@@ -145,6 +151,7 @@ export default function TextEditor(props) {
                         backgroundColor: `${darkTheme ? '#0D1117' : '#484F58'}`,
                         color: '#F7EDCF',
                     }}
+                    onKeyDown={(e) => handleUndo(e)}
                 ></textarea>
             ) : (
                 <div className={styles.markdownWrapper}>

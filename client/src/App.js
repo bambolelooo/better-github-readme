@@ -8,7 +8,7 @@ import { useState } from 'react'
 import Nav from './pages/Nav'
 import Home from './pages/Home'
 import Footer from './pages/Footer'
-import EditorPage from './pages/editorPage'
+import EditorPage from './pages/EditorPage'
 
 function App() {
     const [darkTheme, setDarkTheme] = useState(false)

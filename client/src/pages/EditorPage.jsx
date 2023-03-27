@@ -2,11 +2,39 @@ import { Button } from 'antd'
 import { useState, useRef } from 'react'
 import styles from '../css/editorPage.module.css'
 import TextEditor from '../components/TextEditor'
+import useUndoableState from '../hooks/useUndoaleState'
 
 export default function EditorPage(props) {
+    const {
+        state: textareaValue,
+        setState: setTextareaValue,
+        goBack: undo,
+        goForward: redo,
+    } = useUndoableState('')
     const { darkTheme } = props
-    const [textareaValue, setTextareaValue] = useState('')
     const textareaRef = useRef(null)
+    function handleUndo(event) {
+        if ((event.ctrlKey || event.metaKey) && event.key === 'z') {
+            // Handle undo action
+            console.log('undo')
+            undo()
+        }
+    }
+    function handleUndoRedo(event) {
+        if (
+            (event.ctrlKey || event.metaKey) &&
+            event.key === 'z' &&
+            event.shiftKey
+        ) {
+            // Handle redo action
+            console.log('redo')
+            redo()
+        } else if ((event.ctrlKey || event.metaKey) && event.key === 'z') {
+            // Handle undo action
+            console.log('undo')
+            undo()
+        }
+    }
     function handleSnippet(snippet) {
         const textarea = textareaRef.current
         if (textarea) {
@@ -53,6 +81,7 @@ export default function EditorPage(props) {
                     setTextareaValue={setTextareaValue}
                     textareaRef={textareaRef}
                     darkTheme={darkTheme}
+                    handleUndo={handleUndoRedo}
                 />
             </section>
         </main>
