@@ -31,7 +31,7 @@ const Nav = () => {
             ) : (
                 <ul className="nav-ul nav-right">
                     <li>
-                        <Link onClick={loginWithGithub} to="/login">
+                        <Link onClick={loginWithGithub} to="/auth/github">
                             Login
                         </Link>
                     </li>
