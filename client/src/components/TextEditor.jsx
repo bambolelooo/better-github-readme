@@ -7,6 +7,7 @@ export default function TextEditor(props) {
     const { textareaValue, setTextareaValue, textareaRef, togglePreview } =
         props
     const [preview, setPreview] = useState(false)
+    const [font, setFont] = useState('JetBrains Mono')
     function addSymbolsBeforeAndAfter(symbols) {
         const textarea = textareaRef.current
         const start = textarea.selectionStart
@@ -39,7 +40,6 @@ export default function TextEditor(props) {
         console.log('adding symbols')
         const textarea = document.getElementById('text-editor')
         const start = textarea.selectionStart
-
         // find the start and end positions of the current line
         let lineStart = start
         while (lineStart > 0 && textarea.value.charAt(lineStart - 1) !== '\n') {
@@ -60,6 +60,7 @@ export default function TextEditor(props) {
     }
     const onChange = (value) => {
         console.log(`selected ${value}`)
+        setFont(value)
     }
     const onSearch = (value) => {
         console.log('search:', value)
@@ -138,9 +139,12 @@ export default function TextEditor(props) {
                     onChange={(e) => setTextareaValue(e.target.value)}
                     ref={textareaRef}
                     style={{
-                        fontFamily: 'Montserrat',
+                        fontFamily: `${font}`,
+                        fontSize: '18px',
                         padding: '10px',
                         borderRadius: '15px',
+                        backgroundColor: '#484F58',
+                        color: '#F7EDCF',
                     }}
                 ></textarea>
             ) : (
