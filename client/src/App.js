@@ -40,14 +40,8 @@ function App() {
                 }}
             >
                 <Layout style={{ height: '100%' }}>
-                    <Switch
-                        defaultChecked={false}
-                        checkedChildren="Dark"
-                        unCheckedChildren="Light"
-                        onClick={handleClick}
-                    ></Switch>
                     <BrowserRouter>
-                        <Nav darkTheme={darkTheme} />
+                        <Nav darkTheme={darkTheme} handleClick={handleClick} />
                         <Routes>
                             <Route path="/" element={<Home />}></Route>
                             <Route
