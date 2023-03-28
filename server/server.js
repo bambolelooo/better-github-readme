@@ -9,12 +9,21 @@ const passport = require('passport')
 const authRouter = require('./utils/auth')
 const session = require('express-session')
 
+const cloudinary = require('cloudinary').v2
+
 const PORT = process.env.PORT || 3001
 const app = express()
 const server = new ApolloServer({
     typeDefs,
     resolvers,
 })
+
+cloudinary.config({
+    secure: true,
+})
+
+// Log the configuration
+console.log(cloudinary.config())
 
 app.use(
     session({
