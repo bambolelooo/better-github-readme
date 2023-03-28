@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../App.css'
 
-const Nav = () => {
+const Nav = ({ darkTheme }) => {
     const auth = localStorage.getItem('user')
     const navigate = useNavigate()
     const logout = () => {
@@ -14,7 +14,11 @@ const Nav = () => {
             <img
                 alt="logo"
                 className="logo"
-                src={require('../resources/logodark512.png')}
+                src={
+                    darkTheme
+                        ? require('../resources/logodark512.png')
+                        : require('../resources/logolight512.png')
+                }
             />
             {auth ? (
                 <ul className="nav-ul nav-right">

@@ -42,6 +42,7 @@ nav {
   width: 150px;
   margin-top: 15px;
   margin-left: 20px;
+  transition: all;
 }
 
 .home-container {
