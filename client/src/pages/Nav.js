@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../App.css'
-const client_id = process.env.REACT_APP_GITHUB_CLIENT_ID
 import { Switch } from 'antd'
 import { BsMoonFill } from 'react-icons/bs'
 import { FaSun } from 'react-icons/fa'
+const client_id = process.env.REACT_APP_GITHUB_CLIENT_ID
 const Nav = ({ darkTheme, handleClick }) => {
     const loginWithGithub = () => {
         window.location.assign(
@@ -14,7 +14,7 @@ const Nav = ({ darkTheme, handleClick }) => {
     const auth = localStorage.getItem('user')
     const navigate = useNavigate()
     const logout = () => {
-        localStorage.clear();
+        localStorage.clear()
         navigate('/')
     }
     return (
@@ -53,21 +53,17 @@ const Nav = ({ darkTheme, handleClick }) => {
                         </Link>
                     </li>
                 </ul>
-                )
-                :
-                (
-                    <ul className='nav-ul nav-right'>
+            ) : (
+                <ul className="nav-ul nav-right">
                     <li>
                         <Link onClick={loginWithGithub} to="/auth/github">
-                        Login
+                            Login
                         </Link>
                     </li>
                 </ul>
-                )
-            }
-
+            )}
         </nav>
-    );  
+    )
 }
 
 export default Nav
