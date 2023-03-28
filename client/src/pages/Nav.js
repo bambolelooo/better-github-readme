@@ -2,21 +2,46 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../App.css'
 const client_id = process.env.REACT_APP_GITHUB_CLIENT_ID
-
-const Nav = () => {
-    const auth = localStorage.getItem('user')
-    const navigate = useNavigate()
+import { Switch } from 'antd'
+import { BsMoonFill } from 'react-icons/bs'
+import { FaSun } from 'react-icons/fa'
+const Nav = ({ darkTheme, handleClick }) => {
     const loginWithGithub = () => {
         window.location.assign(
             'https://github.com/login/oauth/authorize?client_id=' + client_id
         )
     }
+    const auth = localStorage.getItem('user')
+    const navigate = useNavigate()
     const logout = () => {
-        localStorage.clear()
+        localStorage.clear();
         navigate('/')
     }
     return (
-        <div>
+        <nav>
+            <img
+                alt="logo"
+                className="logo"
+                src={
+                    darkTheme
+                        ? require('../resources/logodark512.png')
+                        : require('../resources/logolight512.png')
+                }
+            />
+            <Switch
+                defaultChecked={false}
+                checkedChildren={
+                    <div
+                        style={{
+                            marginTop: '2px',
+                        }}
+                    >
+                        <BsMoonFill />
+                    </div>
+                }
+                unCheckedChildren={<FaSun />}
+                onClick={handleClick}
+            />
             {auth ? (
                 <ul className="nav-ul nav-right">
                     <li>
@@ -27,24 +52,22 @@ const Nav = () => {
                             Logout
                         </Link>
                     </li>
-
-                    <img
-                        alt="logo"
-                        className="logo"
-                        src={require('../resources/logodark512.png')}
-                    />
                 </ul>
-            ) : (
-                <ul className="nav-ul nav-right">
+                )
+                :
+                (
+                    <ul className='nav-ul nav-right'>
                     <li>
                         <Link onClick={loginWithGithub} to="/auth/github">
-                            Login
+                        Login
                         </Link>
                     </li>
                 </ul>
-            )}
-        </div>
-    )
+                )
+            }
+
+        </nav>
+    );  
 }
 
 export default Nav
