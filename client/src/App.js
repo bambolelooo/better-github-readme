@@ -9,7 +9,6 @@ import { useState } from 'react'
 import Nav from './pages/Nav'
 import Home from './pages/Home'
 import EditorPage from './pages/EditorPage'
-import { Content, Header } from 'antd/es/layout/layout'
 
 function App() {
     const { defaultAlgorithm, darkAlgorithm } = theme
@@ -21,52 +20,45 @@ function App() {
     }
 
     return (
-        <div style={{ height: '100%' }}>
-            <ConfigProvider
-                theme={
-                    darkTheme
-                        ? {
-                              ...darkThemeConfig,
-                              algorithm: darkAlgorithm,
-                          }
-                        : {
-                              ...lightThemeConfig,
-                              algorithm: defaultAlgorithm,
-                          }
-                }
+        <ConfigProvider
+            theme={
+                darkTheme
+                    ? {
+                          ...darkThemeConfig,
+                          algorithm: darkAlgorithm,
+                      }
+                    : {
+                          ...lightThemeConfig,
+                          algorithm: defaultAlgorithm,
+                      }
+            }
+        >
+            <div
+                style={{
+                    color: `${darkTheme ? '#F7EDCF' : '#484F58'}`,
+                    height: '100%',
+                }}
             >
-                <div
-                    style={{
-                        color: `${darkTheme ? '#F7EDCF' : '#484F58'}`,
-                        height: '100%',
-                    }}
-                >
-                    <Layout>
-                        <Switch
-                            defaultChecked={false}
-                            checkedChildren="Dark"
-                            unCheckedChildren="Light"
-                            onClick={handleClick}
-                        ></Switch>
-                        <BrowserRouter>
-                            <Nav />
-
-                            <Content>
-                                <Routes>
-                                    <Route path="/" element={<Home />}></Route>
-                                    <Route
-                                        path="/editor"
-                                        element={
-                                            <EditorPage darkTheme={darkTheme} />
-                                        }
-                                    ></Route>
-                                </Routes>
-                            </Content>
-                        </BrowserRouter>
-                    </Layout>
-                </div>
-            </ConfigProvider>
-        </div>
+                <Layout style={{ height: '100%' }}>
+                    <Switch
+                        defaultChecked={false}
+                        checkedChildren="Dark"
+                        unCheckedChildren="Light"
+                        onClick={handleClick}
+                    ></Switch>
+                    <BrowserRouter>
+                        <Nav />
+                        <Routes>
+                            <Route path="/" element={<Home />}></Route>
+                            <Route
+                                path="/editor"
+                                element={<EditorPage darkTheme={darkTheme} />}
+                            ></Route>
+                        </Routes>
+                    </BrowserRouter>
+                </Layout>
+            </div>
+        </ConfigProvider>
     )
 }
 
