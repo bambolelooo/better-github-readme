@@ -12,8 +12,9 @@ import EditorPage from './pages/EditorPage'
 
 function App() {
     const { defaultAlgorithm, darkAlgorithm } = theme
-    console.log(darkAlgorithm)
-    const [darkTheme, setDarkTheme] = useState(false)
+    const [darkTheme, setDarkTheme] = useState(
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+    )
 
     const handleClick = () => {
         setDarkTheme(!darkTheme)
