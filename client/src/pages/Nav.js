@@ -17,6 +17,7 @@ const Nav = () => {
     }
     return (
         <div>
+
             {auth ? (
                 <ul className="nav-ul nav-right">
                     <li>
@@ -27,6 +28,15 @@ const Nav = () => {
                             Logout
                         </Link>
                     </li>
+
+            <img alt='logo' className='logo' src={require('../resources/logodark512.png')} />
+            {
+                auth ?
+
+                <ul className='nav-ul nav-right'>
+                    <li><Link to='/repo'>Repo</Link></li>
+                    <li><Link onClick={logout} to='/'>Logout</Link></li>
+
                 </ul>
             ) : (
                 <ul className="nav-ul nav-right">
