@@ -43,7 +43,7 @@ h3 {
 
 .home-container {
   padding: 40px;
-  margin: auto;
+  margin: 0 auto;
   width: 60%;
   border: 5px solid;
   border-radius: 20px;
@@ -51,12 +51,4 @@ h3 {
 
 .home-ul {
   font-size: 18px;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  font-size: 14px;
 }
