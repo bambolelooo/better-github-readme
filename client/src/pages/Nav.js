@@ -29,7 +29,7 @@ const Nav = ({ darkTheme, handleClick }) => {
                 }
             />
             <Switch
-                defaultChecked={false}
+                defaultChecked={darkTheme}
                 checkedChildren={
                     <div
                         style={{
