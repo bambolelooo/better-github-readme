@@ -49,9 +49,11 @@ passport.use(
             const user = {
                 id: profile.id,
                 username: profile.username,
-                email: profile.emails[0].value,
+                token: accessToken,
             }
+
             console.log(user)
+
             done(null, user)
         }
     )
@@ -66,7 +68,9 @@ router.get(
     passport.authenticate('github', { failureRedirect: '/' }),
     function (req, res) {
         // Successful authentication, redirect to dashboard.
-        res.redirect('/')
+        // before deployment change this to /, configering heroku
+        res.redirect(process.env.REACT_APP_FRONTEND_URL)
+
         console.log('Success')
     }
 )
