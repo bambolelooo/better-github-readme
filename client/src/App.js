@@ -47,7 +47,7 @@ function App() {
                         onClick={handleClick}
                     ></Switch>
                     <BrowserRouter>
-                        <Nav />
+                        <Nav darkTheme={darkTheme} />
                         <Routes>
                             <Route path="/" element={<Home />}></Route>
                             <Route
