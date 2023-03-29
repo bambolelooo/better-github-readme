@@ -44,6 +44,10 @@ nav {
   margin-left: 20px;
   transition: all;
 }
+/*#root {*/
+/*  height: fit-content;*/
+/*  min-height: 100%;*/
+/*}*/
 
 .home-container {
   padding: 40px;
