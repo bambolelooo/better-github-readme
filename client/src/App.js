@@ -19,6 +19,7 @@ function App() {
                 <Nav />
                 <Routes>
                     <Route path="/" element={<Home />}></Route>
+                    <Route path="/repo" element={<RepoSearch />}></Route>
                     <Route
                         path="/editor"
                         element={<EditorPage darkTheme={darkTheme} />}
