@@ -38,10 +38,10 @@ function App() {
             <div
                 style={{
                     color: `${darkTheme ? '#F7EDCF' : '#484F58'}`,
-                    height: '100%',
+                    minHeight: '100vh',
                 }}
             >
-                <Layout style={{ height: '100%' }}>
+                <Layout style={{ minHeight: '100vh' }}>
                     <BrowserRouter>
                         <Nav darkTheme={darkTheme} handleClick={handleClick} />
                         <Routes>
