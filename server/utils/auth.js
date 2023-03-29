@@ -53,6 +53,7 @@ passport.use(
                     id: profile.id,
                     name: profile.username,
                 },
+                exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
             }
             const token = jwt.sign(playload, process.env.REACT_APP_JWT_SECRET)
             done(null, token)
