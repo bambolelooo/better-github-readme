@@ -1,6 +1,8 @@
 const express = require('express')
 const passport = require('passport')
 const GitHubStrategy = require('passport-github2').Strategy
+const { User } = require('../models')
+const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 const router = express.Router()
@@ -46,21 +48,23 @@ passport.use(
             //     return done(err, user);
             //   }
             // });
-            const user = {
-                id: profile.id,
-                username: profile.username,
-                token: accessToken,
+            const playload = {
+                user: {
+                    id: profile.id,
+                    name: profile.username,
+                },
             }
-
-            console.log(user)
-
-            done(null, user)
+            const token = jwt.sign(playload, process.env.REACT_APP_JWT_SECRET)
+            done(null, token)
         }
     )
 )
 
 // Redirect the user to Github for authentication
-router.get('/github', passport.authenticate('github'))
+router.get(
+    '/auth/github',
+    passport.authenticate('github', { scope: ['user:email'] })
+)
 
 // Github will redirect the user to this URL after authentication
 router.get(
@@ -69,7 +73,8 @@ router.get(
     function (req, res) {
         // Successful authentication, redirect to dashboard.
         // before deployment change this to /, configering heroku
-        res.redirect(process.env.REACT_APP_FRONTEND_URL)
+        const token = req.user
+        res.redirect(process.env.REACT_APP_FRONTEND_URL + '?token=' + token)
 
         console.log('Success')
     }
