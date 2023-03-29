@@ -38,3 +38,7 @@
 .markdownWrapper img{
     max-width: 100%;
 }
+
+.textareaWrapper {
+    width: 100%;
+}

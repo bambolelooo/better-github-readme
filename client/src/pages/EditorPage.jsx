@@ -3,7 +3,6 @@ import { useState, useRef } from 'react'
 import styles from '../css/editorPage.module.css'
 import TextEditor from '../components/TextEditor'
 import useUndoableState from '../hooks/useUndoaleState'
-
 export default function EditorPage(props) {
     const {
         state: textareaValue,
@@ -13,6 +12,16 @@ export default function EditorPage(props) {
     } = useUndoableState('')
     const { darkTheme } = props
     const textareaRef = useRef(null)
+
+    const draggerProps = {
+        name: 'file',
+        multiple: false,
+
+        onDrop(e) {
+            console.log('Dropped files', e.dataTransfer.files)
+        },
+    }
+
     function handleUndo(event) {
         if ((event.ctrlKey || event.metaKey) && event.key === 'z') {
             // Handle undo action

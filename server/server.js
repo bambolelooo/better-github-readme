@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors') // import cors package
 const { ApolloServer } = require('apollo-server-express')
 const path = require('path')
 
@@ -7,9 +8,8 @@ const { typeDefs, resolvers } = require('./schemas')
 const db = require('./config/connection')
 const passport = require('passport')
 const authRouter = require('./utils/auth')
+const imageRouter = require('./utils/image')
 const session = require('express-session')
-
-const cloudinary = require('cloudinary').v2
 
 const PORT = process.env.PORT || 3001
 const app = express()
@@ -17,13 +17,6 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
 })
-
-cloudinary.config({
-    secure: true,
-})
-
-// Log the configuration
-console.log(cloudinary.config())
 
 app.use(
     session({
@@ -38,6 +31,8 @@ app.use(
     })
 )
 
+app.use(cors()) // enable CORS for all routes
+
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 // passport package middleware
@@ -45,6 +40,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/auth', authRouter)
+app.use('/api/image', imageRouter)
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/build')))
