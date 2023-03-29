@@ -50,6 +50,10 @@ function App() {
                                 path="/editor"
                                 element={<EditorPage darkTheme={darkTheme} />}
                             ></Route>
+                            <Route
+                                path="/repo"
+                                element={<RepoSearch />}
+                            ></Route>
                         </Routes>
                     </BrowserRouter>
                 </Layout>
