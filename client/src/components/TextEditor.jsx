@@ -77,26 +77,24 @@ export default function TextEditor(props) {
     }
     const handleDrop = (event) => {
         event.preventDefault()
-        const files = Array.from(event.dataTransfer.files)
-        files.forEach((file) => {
-            const formData = new FormData()
-            formData.append('image', file)
-            axios
-                .post('http://localhost:3001/api/image/upload', formData)
-                .then((response) => {
-                    const { filename, url } = response.data
-                    const startPos = textareaRef.current.selectionStart
-                    const endPos = textareaRef.current.selectionEnd
-                    const newText =
-                        textareaValue.substring(0, startPos) +
-                        `![${filename}](${url})` +
-                        textareaValue.substring(endPos, textareaValue.length)
-                    setTextareaValue(newText)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        })
+        const file = Array.from(event.dataTransfer.files)[0]
+        const formData = new FormData()
+        formData.append('image', file)
+        axios
+            .post('http://localhost:3001/api/image/upload', formData)
+            .then((response) => {
+                const { filename, url } = response.data
+                const startPos = textareaRef.current.selectionStart
+                const endPos = textareaRef.current.selectionEnd
+                const newText =
+                    textareaValue.substring(0, startPos) +
+                    `![${filename}](${url})` +
+                    textareaValue.substring(endPos, textareaValue.length)
+                setTextareaValue(newText)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     const handlePaste = (event) => {
