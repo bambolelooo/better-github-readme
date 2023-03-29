@@ -9,6 +9,7 @@ import Nav from './pages/Nav'
 import Home from './pages/Home'
 import Footer from './pages/Footer'
 import EditorPage from './pages/EditorPage'
+import RepoSearch from './pages/RepoSearch'
 
 function App() {
     const [darkTheme, setDarkTheme] = useState(false)
