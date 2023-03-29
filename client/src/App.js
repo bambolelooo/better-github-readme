@@ -9,6 +9,7 @@ import { useState } from 'react'
 import Nav from './pages/Nav'
 import Home from './pages/Home'
 import EditorPage from './pages/EditorPage'
+import RepoSearch from './pages/RepoSearch'
 
 function App() {
     const { defaultAlgorithm, darkAlgorithm } = theme
