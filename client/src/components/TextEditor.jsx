@@ -88,8 +88,10 @@ export default function TextEditor(props) {
                 const endPos = textareaRef.current.selectionEnd
                 const newText =
                     textareaValue.substring(0, startPos) +
+                    '\n' +
                     `![${filename}](${url})` +
-                    textareaValue.substring(endPos, textareaValue.length)
+                    textareaValue.substring(endPos, textareaValue.length) +
+                    '\n'
                 setTextareaValue(newText)
             })
             .catch((error) => {
@@ -113,8 +115,10 @@ export default function TextEditor(props) {
                     const endPos = textareaRef.current.selectionEnd
                     const newText =
                         textareaValue.substring(0, startPos) +
+                        '\n' +
                         `![${filename}](${url})` +
-                        textareaValue.substring(endPos, textareaValue.length)
+                        textareaValue.substring(endPos, textareaValue.length) +
+                        '\n'
                     setTextareaValue(newText)
                 })
                 .catch((error) => {
