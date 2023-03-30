@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import repoChoices from './repos'
 import './RepoSearch.css'
 import Auth from '../utils/auth'
+import axios from 'axios'
 
 const getFilteredRepos = (query, items) => {
     if (!query) {
@@ -31,18 +32,19 @@ const getFilteredRepos = (query, items) => {
 
 function RepoSearch() {
     Auth.login()
-    const [query, setQuery] = useState('')
 
-    const { repos } = repoChoices
-    const { repoItems } = repos
-    const filteredRepos = getFilteredRepos(query, repoItems)
+    // const [query, setQuery] = useState('')
+
+    // const { repos } = repoChoices
+    // const { repoItems } = repos
+    // const filteredRepos = getFilteredRepos(query, repoItems)
 
     return (
         <section className="repo-section">
             <h1>Choose a Github Repo</h1>
             {Auth.loggedIn() ? (
                 <>
-                    <div className="repo-search">
+                    {/* <div className="repo-search">
                         <label>
                             <span className="visually-hidden">
                                 Search your repos
@@ -60,7 +62,8 @@ function RepoSearch() {
                                 <h6 key={repo.username}> {repo.name} </h6>
                             ))}
                         </ul>
-                    </div>
+                    </div> */}
+                    <h3>logged in</h3>
                 </>
             ) : (
                 <h3>Please login to view your repos</h3>
