@@ -8,7 +8,9 @@ const client_id = process.env.REACT_APP_GITHUB_CLIENT_ID
 const Nav = ({ darkTheme, handleClick }) => {
     const loginWithGithub = () => {
         window.location.assign(
-            'https://github.com/login/oauth/authorize?client_id=' + client_id
+            'https://github.com/login/oauth/authorize?client_id=' +
+                client_id +
+                '&scope=repo'
         )
     }
     const auth = localStorage.getItem('user')
