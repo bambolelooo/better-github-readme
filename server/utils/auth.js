@@ -52,20 +52,19 @@ passport.use(
                 user: {
                     id: profile.id,
                     name: profile.username,
+                    accessToken: accessToken,
                 },
                 exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
             }
             const token = jwt.sign(playload, process.env.REACT_APP_JWT_SECRET)
+            console.log(accessToken)
             done(null, token)
         }
     )
 )
 
 // Redirect the user to Github for authentication
-router.get(
-    '/auth/github',
-    passport.authenticate('github', { scope: ['user:email'] })
-)
+router.get('/auth/github', passport.authenticate('github'))
 
 // Github will redirect the user to this URL after authentication
 router.get(
@@ -75,6 +74,8 @@ router.get(
         // Successful authentication, redirect to dashboard.
         // before deployment change this to /, configering heroku
         const token = req.user
+        // pass token in the header, and extract it in the frontend
+        // res.header('Authorization', auth)
         res.redirect(process.env.REACT_APP_FRONTEND_URL + '?token=' + token)
 
         console.log('Success')
