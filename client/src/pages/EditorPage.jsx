@@ -1,9 +1,18 @@
-import { Button } from 'antd'
+import { Button, Popconfirm } from 'antd'
 import { useState, useRef } from 'react'
 import styles from '../css/editorPage.module.css'
 import TextEditor from '../components/TextEditor'
 import useUndoableState from '../hooks/useUndoaleState'
+import axios from 'axios'
 export default function EditorPage(props) {
+    const [loading, setLoading] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [confirmLoading, setConfirmLoading] = useState(false)
+
+    const showPopconfirm = () => {
+        setOpen(!open)
+    }
+
     const {
         state: textareaValue,
         setState: setTextareaValue,
@@ -13,20 +22,35 @@ export default function EditorPage(props) {
     const { darkTheme } = props
     const textareaRef = useRef(null)
 
-    const draggerProps = {
-        name: 'file',
-        multiple: false,
+    const token = localStorage.getItem('user')
 
-        onDrop(e) {
-            console.log('Dropped files', e.dataTransfer.files)
-        },
-    }
+    async function handlePost() {
+        if (token) {
+            // Split the token into its three parts: header, payload, and signature
+            const [header, payload, signature] = token.split('.')
 
-    function handleUndo(event) {
-        if ((event.ctrlKey || event.metaKey) && event.key === 'z') {
-            // Handle undo action
-            console.log('undo')
-            undo()
+            // Decode the base64-encoded payload
+            const decodedPayload = atob(payload)
+            // Parse the JSON payload into a JavaScript object
+            const payloadObj = JSON.parse(decodedPayload)
+            setConfirmLoading(true)
+            axios
+                .post('http://localhost:3001/api/readme', {
+                    ...payloadObj.user,
+                    text: textareaValue,
+                })
+                .then((res) => {
+                    setConfirmLoading(false)
+                    setTimeout(() => {
+                        setOpen(false)
+                    }, 500)
+                    console.log(res)
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+        } else {
+            console.log('JWT token not found in localStorage')
         }
     }
     function handleUndoRedo(event) {
@@ -73,6 +97,20 @@ export default function EditorPage(props) {
     return (
         <main className={styles.main}>
             <section className={styles.snippetSection}>
+                <Popconfirm
+                    title="Confirmation"
+                    description="Are you sure you want to post this ReadMe to GitHub?"
+                    open={open}
+                    onConfirm={handlePost}
+                    onCancel={showPopconfirm}
+                    okButtonProps={{ loading: confirmLoading }}
+                    okText={'Yes!'}
+                    cancelText={'Not yet'}
+                >
+                    <Button onClick={showPopconfirm} loading={loading}>
+                        Post to GitHub
+                    </Button>
+                </Popconfirm>
                 <h3>Snippets</h3>
                 {snippets.map((snippet, index) => (
                     <Button

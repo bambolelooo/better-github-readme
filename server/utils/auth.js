@@ -50,6 +50,7 @@ passport.use(
             // });
             const playload = {
                 user: {
+                    token: accessToken,
                     id: profile.id,
                     name: profile.username,
                 },
