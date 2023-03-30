@@ -1,9 +1,10 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import '../App.css'
 import { Switch } from 'antd'
 import { BsMoonFill } from 'react-icons/bs'
 import { FaSun } from 'react-icons/fa'
+import Auth from '../utils/auth'
 const client_id = process.env.REACT_APP_GITHUB_CLIENT_ID
 const Nav = ({ darkTheme, handleClick }) => {
     const loginWithGithub = () => {
@@ -13,12 +14,7 @@ const Nav = ({ darkTheme, handleClick }) => {
                 '&scope=repo'
         )
     }
-    const auth = localStorage.getItem('user')
-    const navigate = useNavigate()
-    const logout = () => {
-        localStorage.clear()
-        navigate('/')
-    }
+
     return (
         <nav>
             <img
@@ -44,13 +40,13 @@ const Nav = ({ darkTheme, handleClick }) => {
                 unCheckedChildren={<FaSun />}
                 onClick={handleClick}
             />
-            {auth ? (
+            {Auth.loggedIn() ? (
                 <ul className="nav-ul nav-right">
                     <li>
                         <Link to="/repo">Repo</Link>
                     </li>
                     <li>
-                        <Link onClick={logout} to="/">
+                        <Link onClick={Auth.logout} to="/">
                             Logout
                         </Link>
                     </li>

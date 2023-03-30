@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import repoChoices from './repos'
 import './RepoSearch.css'
+import Auth from '../utils/auth'
 
 const getFilteredRepos = (query, items) => {
     if (!query) {
@@ -9,16 +10,6 @@ const getFilteredRepos = (query, items) => {
     return items.filter((repo) => repo.name.includes(query))
 }
 
-// store the JWT from the URL to the local storage
-const getJwtFromUrl = () => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const token = urlParams.get('token')
-    if (token) {
-        localStorage.setItem('user', token)
-    } else {
-        localStorage.removeItem('user')
-    }
-}
 // fetch the JWT token from header
 // const getJwtFromHeader = () => {
 //     fetch('/github/callback', {
@@ -39,7 +30,7 @@ const getJwtFromUrl = () => {
 // }
 
 function RepoSearch() {
-    getJwtFromUrl()
+    Auth.login()
     const [query, setQuery] = useState('')
 
     const { repos } = repoChoices
@@ -49,24 +40,31 @@ function RepoSearch() {
     return (
         <section className="repo-section">
             <h1>Choose a Github Repo</h1>
+            {Auth.loggedIn() ? (
+                <>
+                    <div className="repo-search">
+                        <label>
+                            <span className="visually-hidden">
+                                Search your repos
+                            </span>
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Search your repos"
+                            onChange={(e) => setQuery(e.target.value)}
+                        />
+                        <button type="submit">Search</button>
 
-            <div className="repo-search">
-                <label>
-                    <span className="visually-hidden">Search your repos</span>
-                </label>
-                <input
-                    type="text"
-                    placeholder="Search your repos"
-                    onChange={(e) => setQuery(e.target.value)}
-                />
-                <button type="submit">Search</button>
-
-                <ul>
-                    {filteredRepos.map((repo) => (
-                        <h6 key={repo.username}> {repo.name} </h6>
-                    ))}
-                </ul>
-            </div>
+                        <ul>
+                            {filteredRepos.map((repo) => (
+                                <h6 key={repo.username}> {repo.name} </h6>
+                            ))}
+                        </ul>
+                    </div>
+                </>
+            ) : (
+                <h3>Please login to view your repos</h3>
+            )}
         </section>
     )
 }
