@@ -8,6 +8,7 @@ import * as lightThemeConfig from './light_theme.json'
 import { useState } from 'react'
 import Nav from './pages/Nav'
 import Home from './pages/Home'
+import Templates from './pages/Templates'
 import EditorPage from './pages/EditorPage'
 import RepoSearch from './pages/RepoSearch'
 
@@ -46,6 +47,7 @@ function App() {
                         <Nav darkTheme={darkTheme} handleClick={handleClick} />
                         <Routes>
                             <Route path="/" element={<Home />}></Route>
+                            <Route path="/templates" element={<Templates />}></Route>
                             <Route
                                 path="/editor"
                                 element={<EditorPage darkTheme={darkTheme} />}

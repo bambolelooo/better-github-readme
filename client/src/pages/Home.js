@@ -1,5 +1,6 @@
 import React from 'react';
 import '../App.css';
+import { Card } from 'antd'
 
 function Home() {
     return (
@@ -9,8 +10,7 @@ function Home() {
                 <h2>Welcome to Better Github ReadMe or BGR for short!</h2>
                 <br/>
 
-                <div className='home-container'>
-                
+                    <Card className="home-container">
                     <h3>What we do?</h3>
                     <ul className='home-ul'>
                         <li>
@@ -23,20 +23,18 @@ function Home() {
                         <li>
                             Simply click the Login button on the top right which will redirect you to login to your Github account
                         </li>
-                        <br/>
                         <li>
                             Select the Github repo your would like to add the ReadMe file to
                         </li>
-                        <br/>
                         <li>
                             Choose from any of our ReadMe template
                         </li>
-                        <br/>
                         <li>
                             Edit the content and push the ReadMe to your Github repo
                         </li>
                     </ul>
-                </div>
+                    </Card>
+
             </section>
     );
 }
