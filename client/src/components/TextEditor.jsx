@@ -3,6 +3,8 @@ import { Button, Select } from 'antd'
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
+import { useDropzone } from 'react-dropzone'
+import axios from 'axios'
 export default function TextEditor(props) {
     const {
         textareaValue,
@@ -11,6 +13,9 @@ export default function TextEditor(props) {
         darkTheme,
         handleUndo,
     } = props
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop: (acceptedFiles) => console.log(acceptedFiles),
+    })
     const [preview, setPreview] = useState(false)
     const [font, setFont] = useState('JetBrains Mono')
     function addSymbolsBeforeAndAfter(symbols) {
@@ -69,6 +74,57 @@ export default function TextEditor(props) {
     }
     const onSearch = (value) => {
         console.log('search:', value)
+    }
+    const handleDrop = (event) => {
+        event.preventDefault()
+        const file = Array.from(event.dataTransfer.files)[0]
+        const formData = new FormData()
+        formData.append('image', file)
+        axios
+            .post('http://localhost:3001/api/image/upload', formData)
+            .then((response) => {
+                const { filename, url } = response.data
+                const startPos = textareaRef.current.selectionStart
+                const endPos = textareaRef.current.selectionEnd
+                const newText =
+                    textareaValue.substring(0, startPos) +
+                    '\n' +
+                    `![${filename}](${url})` +
+                    textareaValue.substring(endPos, textareaValue.length) +
+                    '\n'
+                setTextareaValue(newText)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const handlePaste = (event) => {
+        const items = Array.from(event.clipboardData.items)
+        const file = items.find((item) => item.kind === 'file')
+        if (file) {
+            const formData = new FormData()
+            formData.append('image', file.getAsFile())
+            axios
+                .post('http://localhost:3001/api/image/upload', formData)
+                .then((response) => {
+                    console.log(response)
+                    const { filename, url } = response.data
+                    console.log(filename, url)
+                    const startPos = textareaRef.current.selectionStart
+                    const endPos = textareaRef.current.selectionEnd
+                    const newText =
+                        textareaValue.substring(0, startPos) +
+                        '\n' +
+                        `![${filename}](${url})` +
+                        textareaValue.substring(endPos, textareaValue.length) +
+                        '\n'
+                    setTextareaValue(newText)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
     }
     return (
         <div className={styles.wrapper}>
@@ -138,6 +194,7 @@ export default function TextEditor(props) {
             </div>
             {!preview ? (
                 <textarea
+                    className={styles.textareaWrapper}
                     rows={20}
                     id={'text-editor'}
                     value={textareaValue}
@@ -151,6 +208,8 @@ export default function TextEditor(props) {
                         backgroundColor: `${darkTheme ? '#0D1117' : '#484F58'}`,
                         color: '#F7EDCF',
                     }}
+                    onDrop={handleDrop}
+                    onPaste={handlePaste}
                     onKeyDown={(e) => handleUndo(e)}
                 ></textarea>
             ) : (

@@ -1,7 +1,7 @@
 .snippetSection {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     width: 33%;
     text-align: center;
 }
@@ -13,4 +13,8 @@
 }
 .textSection {
     width: 100%;
+}
+
+.dragger {
+    margin-bottom: 20px;
 }

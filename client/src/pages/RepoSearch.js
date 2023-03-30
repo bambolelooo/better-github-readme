@@ -4,7 +4,7 @@ import './RepoSearch.css'
 import Auth from '../utils/auth'
 import axios from 'axios'
 
-const getFilteredRepos = (query, items) => {
+const getFilteredRepos = (query, items) =>  {
     if (!query) {
         return items
     }
@@ -42,33 +42,29 @@ function RepoSearch() {
     return (
         <section className="repo-section">
             <h1>Choose a Github Repo</h1>
-            {Auth.loggedIn() ? (
-                <>
-                    {/* <div className="repo-search">
-                        <label>
-                            <span className="visually-hidden">
-                                Search your repos
-                            </span>
-                        </label>
-                        <input
-                            type="text"
-                            placeholder="Search your repos"
-                            onChange={(e) => setQuery(e.target.value)}
-                        />
-                        <button type="submit">Search</button>
-                        <ul>
-                            {filteredRepos.map((repo) => (
-                                <h6 key={repo.username}> {repo.name} </h6>
-                            ))}
-                        </ul>
-                    </div> */}
-                    <h3>logged in</h3>
-                </>
-            ) : (
-                <h3>Please login to view your repos</h3>
-            )}
+
+            <div className="repo-search"> 
+              <label>
+                 <span className="visually-hidden">Search your repos</span>
+              </label>
+              <input 
+                    type="text" 
+                    placeholder="Search your repos"
+                    onChange={e => setQuery(e.target.value)}
+               />
+              <button type="submit">Search</button>
+
+              <ul>
+                {filteredRepos.map( (repo)=>(
+                    <h6 key={repo.username}> {repo.name} </h6>
+                ) )}
+              </ul>
+
+            </div>
+                        
+
         </section>
     )
 }
 
-export default RepoSearch
+export default RepoSearch;
