@@ -10,6 +10,7 @@ const passport = require('passport')
 const authRouter = require('./utils/auth')
 const imageRouter = require('./utils/image')
 const readmeRouter = require('./utils/postReadme')
+const repoRouter = require('./utils/getRepo')
 const session = require('express-session')
 
 const PORT = process.env.PORT || 3001
@@ -43,6 +44,7 @@ app.use(passport.session())
 app.use('/auth', authRouter)
 app.use('/api/image', imageRouter)
 app.use('/api/readme', readmeRouter)
+app.use('/api/repo', repoRouter)
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/build')))
