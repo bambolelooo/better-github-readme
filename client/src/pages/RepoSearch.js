@@ -19,6 +19,24 @@ const getJwtFromUrl = () => {
         localStorage.removeItem('user')
     }
 }
+// fetch the JWT token from header
+// const getJwtFromHeader = () => {
+//     fetch('/github/callback', {
+//         headers: {
+//             Authorization: `Bearer ${localStorage.getItem('token')}`,
+//         },
+//     })
+//         .then((response) => {
+//             // extract the JWT from the Authorization header
+//             const header = response.headers.get('Authorization')
+//             const token = header.split(' ')[1]
+//             // store the JWT in localStorage or some other client-side storage
+//             localStorage.setItem('token', token)
+//         })
+//         .catch((error) => {
+//             console.error(error)
+//         })
+// }
 
 function RepoSearch() {
     getJwtFromUrl()
