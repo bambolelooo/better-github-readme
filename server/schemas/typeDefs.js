@@ -5,6 +5,7 @@ const typeDefs = gql`
         _id: ID
         githubUsername: String
         email: String
+        accessToken: String
         repos: [Repo]
     }
 
@@ -46,6 +47,7 @@ const typeDefs = gql`
 
     type Mutation {
         SaveReadme(repoId: ID!, readmeContent: String!): Readme
+        updateAccessToken(accessToken: String!): User
     }
 `
 
