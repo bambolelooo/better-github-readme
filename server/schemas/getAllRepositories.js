@@ -7,6 +7,7 @@ const getRepositories = {
     type: new GraphQLList(GraphQLString),
 
     async resolve(_, __, { user }) {
+        console.log('got a request')
         const username = user.user.name
         // Check if the user is authenticated
         if (!user) {
