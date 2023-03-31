@@ -21,13 +21,13 @@ const server = new ApolloServer({
     resolvers,
     context: ({ req }) => {
         // Get the JWT token from the request header
-        const token = req.headers.authorization
-
-        // If there is no token, return an empty context
+        const authHeader = req.headers.authorization
+        const token = authHeader && authHeader.substring(7)
         if (!token) {
             return {}
         }
-
+        const [header, payload, signature] = token.split('.')
+        const decodedPayload = JSON.parse(atob(payload))
         try {
             // Verify the token with your secret key
             const decodedToken = jwt.verify(
@@ -36,7 +36,7 @@ const server = new ApolloServer({
             )
 
             // Return the user object from the decoded token
-            return { user: decodedToken }
+            return { user: decodedPayload }
         } catch (err) {
             // If the token is invalid, throw an authentication error
             throw new AuthenticationError('Invalid token')

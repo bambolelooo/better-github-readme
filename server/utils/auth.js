@@ -58,9 +58,8 @@ passport.use(
 
                 const playload = {
                     user: {
-                        id: user.id,
-                        name: user.username,
-                        accessToken: accessToken,
+                        id: profile.id,
+                        name: profile.username,
                     },
                     exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
                 }

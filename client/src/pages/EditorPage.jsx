@@ -43,29 +43,36 @@ export default function EditorPage(props) {
 
     async function handlePost() {
         if (token) {
-            // Split the token into its three parts: header, payload, and signature
-            const [header, payload, signature] = token.split('.')
+            const repositoryName = 'publicTest'
+            const text = textareaValue
 
-            // Decode the base64-encoded payload
-            const decodedPayload = atob(payload)
-            // Parse the JSON payload into a JavaScript object
-            const payloadObj = JSON.parse(decodedPayload)
-            setConfirmLoading(true)
             axios
-                .post('http://localhost:3001/api/readme', {
-                    ...payloadObj.user,
-                    text: textareaValue,
-                })
-                .then((res) => {
-                    setConfirmLoading(false)
+                .post(
+                    'http://localhost:3001/graphql',
+                    {
+                        query: `
+                            mutation($text: String!, $repositoryName: String!) {
+                            updateReadme(text: $text, repositoryName: $repositoryName)
+                            }
+                        `,
+                        variables: { text, repositoryName },
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`, // pass the user's access token in the Authorization header
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                )
+                .then((response) => {
+                    console.log(response.data)
                     openNotificationWithIcon('success')
                     setTimeout(() => {
                         setOpen(false)
                     }, 500)
-                    console.log(res)
                 })
                 .catch((error) => {
-                    console.error(error)
+                    console.log(error)
                     openNotificationWithIcon(
                         'error',
                         'Error',
