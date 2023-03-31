@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import '../App.css'
-import { AutoComplete } from 'antd'
+import { AutoComplete, List } from 'antd'
+import styles from '../css/repoPage.module.css'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import Auth from '../utils/auth'
 
-function Repo() {
+function RepoPage() {
+    const navigate = useNavigate()
+    Auth.login()
     const token = localStorage.getItem('user')
-    const [repos, setRepos] = useState(null)
+    const [repos, setRepos] = useState([])
     console.log(repos)
     useEffect(() => {
         const fetchData = async () => {
@@ -16,10 +21,7 @@ function Repo() {
                     data: {
                         query: `
                       query {
-                        getRepositories {
-                          name
-                          url
-                        }
+                        getRepositories
                       }
                     `,
                     },
@@ -27,8 +29,11 @@ function Repo() {
                         Authorization: `Bearer ${token}`,
                     },
                 })
-                setRepos(response.data)
-                console.log(response.data)
+                setRepos(
+                    response.data.data.getRepositories.map((repoName) => {
+                        return { value: repoName }
+                    })
+                )
             } catch (error) {
                 console.log(error)
             }
@@ -36,18 +41,47 @@ function Repo() {
 
         fetchData()
     }, [])
+    function onSelect(data) {
+        console.log(data)
+        localStorage.setItem('repo', JSON.stringify(data))
+        return navigate('/templates')
+    }
     return (
-        <section className="home-page">
+        <section className={styles.main}>
             <h1>Choose a Repo</h1>
 
             <AutoComplete
-                placeholder="input search text"
+                placeholder="Search for repo"
                 style={{
                     width: 304,
                 }}
+                filterOption={(inputValue, option) => {
+                    return (
+                        option.value
+                            .toUpperCase()
+                            .indexOf(inputValue.toUpperCase()) !== -1
+                    )
+                }}
+                options={repos}
+                onSelect={onSelect}
+            />
+            <List
+                bordered
+                dataSource={repos.map((repo) => repo.value)}
+                renderItem={(item) => (
+                    <List.Item
+                        className={styles.listItem}
+                        onClick={() => {
+                            onSelect(item)
+                        }}
+                    >
+                        {item}
+                    </List.Item>
+                )}
+                className={styles.list}
             />
         </section>
     )
 }
 
-export default Repo
+export default RepoPage

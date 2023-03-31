@@ -1,0 +1,28 @@
+.main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+}
+.list {
+    width: 66%;
+}
+.listItem {
+    cursor: pointer;
+    transition: all;
+    transition-duration: 300ms;
+
+}
+.listItem:hover {
+    box-shadow: 0 0 2px #eee;
+    transition: all;
+    transition-duration: 300ms;
+}
+.listItem:first-child {
+    border-radius: 5px 5px 0 0;
+}
+.listItem:last-child {
+    border-radius: 0 0 5px 5px;
+}

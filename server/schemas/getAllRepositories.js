@@ -8,14 +8,13 @@ const getRepositories = {
 
     async resolve(_, __, { user }) {
         console.log('got a request')
-        const username = user.user.name
         // Check if the user is authenticated
         if (!user) {
             throw new AuthenticationError(
                 'You must be logged in to perform this action'
             )
         }
-
+        const username = user.user.name
         let accessToken
         await User.findOne({ githubUsername: username })
             .then((user) => {
@@ -40,7 +39,7 @@ const getRepositories = {
             `
       query($username: String!) {
         user(login: $username) {
-          repositories(first: 100) {
+          repositories(first: 100, ownerAffiliations: [OWNER]) {
             nodes {
               name
               url
@@ -58,7 +57,6 @@ const getRepositories = {
         const repositories = githubUser.repositories.nodes.map(
             (repo) => repo.name
         )
-        console.log(repositories)
         return repositories
     },
 }

@@ -18,6 +18,8 @@ function App() {
     const [darkTheme, setDarkTheme] = useState(
         window.matchMedia('(prefers-color-scheme: dark)').matches
     )
+    const [repo, setRepo] = useState('')
+    const [template, setTemplate] = useState('Empty')
 
     const handleClick = () => {
         setDarkTheme(!darkTheme)
@@ -56,10 +58,6 @@ function App() {
                             <Route
                                 path="/editor"
                                 element={<EditorPage darkTheme={darkTheme} />}
-                            ></Route>
-                            <Route
-                                path="/repo"
-                                element={<RepoSearch />}
                             ></Route>
                         </Routes>
                     </BrowserRouter>
