@@ -48,7 +48,7 @@ export default function EditorPage(props) {
 
             axios
                 .post(
-                    'http://localhost:3001/graphql',
+                    `${process.env.REACT_APP_BACK_END_URL}/graphql`,
                     {
                         query: `
                             mutation($text: String!, $repositoryName: String!) {
