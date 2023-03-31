@@ -5,9 +5,10 @@ import { Switch } from 'antd'
 import { BsMoonFill } from 'react-icons/bs'
 import { FaSun } from 'react-icons/fa'
 import Auth from '../utils/auth'
-const client_id = process.env.REACT_APP_GITHUB_CLIENT_ID
 const Nav = ({ darkTheme, handleClick }) => {
     const loginWithGithub = () => {
+        const client_id = process.env.REACT_APP_GITHUB_CLIENT_ID
+        console.log(process.env)
         window.location.assign(
             'https://github.com/login/oauth/authorize?client_id=' +
                 client_id +
