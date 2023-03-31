@@ -3,8 +3,8 @@ import { Button, Select } from 'antd'
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
-import { useDropzone } from 'react-dropzone'
-import axios from 'axios'
+// import { useDropzone } from 'react-dropzone'
+// import axios from 'axios'
 export default function TextEditor(props) {
     const {
         textareaValue,
