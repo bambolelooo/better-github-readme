@@ -81,7 +81,10 @@ export default function TextEditor(props) {
         const formData = new FormData()
         formData.append('image', file)
         axios
-            .post('http://localhost:3001/api/image/upload', formData)
+            .post(
+                `${process.env.REACT_APP_BACK_END_URL}/api/image/upload`,
+                formData
+            )
             .then((response) => {
                 const { filename, url } = response.data
                 const startPos = textareaRef.current.selectionStart
@@ -106,7 +109,10 @@ export default function TextEditor(props) {
             const formData = new FormData()
             formData.append('image', file.getAsFile())
             axios
-                .post('http://localhost:3001/api/image/upload', formData)
+                .post(
+                    `${process.env.REACT_APP_BACK_END_URL}/api/image/upload`,
+                    formData
+                )
                 .then((response) => {
                     console.log(response)
                     const { filename, url } = response.data
