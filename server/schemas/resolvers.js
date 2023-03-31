@@ -27,6 +27,14 @@ const resolvers = {
             )
             return readme
         },
+        updateAccessToken: async (parent, { accessToken }) => {
+            const user = await User.findOneAndUpdate(
+                {},
+                { accessToken },
+                { new: true }
+            )
+            return user
+        },
     },
 }
 

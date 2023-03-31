@@ -16,6 +16,21 @@ passport.deserializeUser((user, done) => {
     done(null, user)
 })
 
+//get user email from the github api
+const getUserEmail = async (accessToken) => {
+    const octokit = new Octokit({
+        auth: accessToken,
+    })
+
+    const response = await octokit.request('GET /user/emails', {
+        headers: {
+            'X-GitHub-Api-Version': '2022-11-28',
+        },
+    })
+
+    return response.data[0].email
+}
+
 // Configure passport with the Github strategy
 passport.use(
     new GitHubStrategy(
@@ -24,41 +39,39 @@ passport.use(
             clientSecret: process.env.REACT_APP_GITHUB_CLIENT_SECRET,
             callbackURL: process.env.REACT_APP_GITHUB_CALLBACK_URL,
         },
-        function (accessToken, refreshToken, profile, done) {
-            // Use the profile information (email, name, etc.) to create a new user
-            // or authenticate an existing user in your application's database.
-            // Then call the `done` function to complete the authentication process.
-            // For example:
-            //save user data to the database:
-            //User.findOne({ githubId: profile.id }, function (err, user) {
-            //   if (err) { return done(err); }
-            //   if (!user) {
-            //     user = new User({
-            //       githubId: profile.id,
-            //       username: profile.username,
-            //       displayName: profile.displayName,
-            //       profileUrl: profile.profileUrl,
-            //       email: profile.emails[0].value
-            //     });
-            //     user.save(function (err) {
-            //       if (err) console.log(err);
-            //       return done(err, user);
-            //     });
-            //   } else {
-            //     return done(err, user);
-            //   }
-            // });
-            const playload = {
-                user: {
-                    id: profile.id,
-                    name: profile.username,
-                    accessToken: accessToken,
-                },
-                exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+        async function (accessToken, refreshToken, profile, done) {
+            try {
+                let user = await User.findOne({
+                    githubUsername: profile.username,
+                })
+
+                if (!user) {
+                    user = new User({
+                        githubUsername: profile.username,
+                        accessToken: accessToken,
+                    })
+                    await user.save()
+                } else if (user.accessToken !== accessToken) {
+                    user.accessToken = accessToken
+                    await user.save()
+                }
+
+                const playload = {
+                    user: {
+                        id: user.id,
+                        name: user.username,
+                        accessToken: accessToken,
+                    },
+                    exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+                }
+                const token = jwt.sign(
+                    playload,
+                    process.env.REACT_APP_JWT_SECRET
+                )
+                return done(null, token)
+            } catch (error) {
+                return done(error)
             }
-            const token = jwt.sign(playload, process.env.REACT_APP_JWT_SECRET)
-            console.log(accessToken)
-            done(null, token)
         }
     )
 )
