@@ -1,4 +1,5 @@
 const { User, Readme, Snippet, Template } = require('../models')
+const updateReadmeMutation = require('./updateReadmeMutation')
 const resolvers = {
     Query: {
         user: async () => {
@@ -35,6 +36,7 @@ const resolvers = {
             )
             return user
         },
+        updateReadme: updateReadmeMutation,
     },
 }
 

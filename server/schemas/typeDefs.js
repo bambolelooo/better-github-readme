@@ -47,6 +47,7 @@ const typeDefs = gql`
 
     type Mutation {
         SaveReadme(repoId: ID!, readmeContent: String!): Readme
+        updateReadme(text: String!, repositoryName: String!): String!
         updateAccessToken(accessToken: String!): User
     }
 `
