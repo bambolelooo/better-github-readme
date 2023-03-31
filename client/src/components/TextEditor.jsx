@@ -3,8 +3,7 @@ import { Button, Select } from 'antd'
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
-// import { useDropzone } from 'react-dropzone'
-// import axios from 'axios'
+import axios from 'axios'
 export default function TextEditor(props) {
     const {
         textareaValue,
@@ -13,9 +12,6 @@ export default function TextEditor(props) {
         darkTheme,
         handleUndo,
     } = props
-    const { getRootProps, getInputProps } = useDropzone({
-        onDrop: (acceptedFiles) => console.log(acceptedFiles),
-    })
     const [preview, setPreview] = useState(false)
     const [font, setFont] = useState('JetBrains Mono')
     function addSymbolsBeforeAndAfter(symbols) {
