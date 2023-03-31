@@ -1,15 +1,8 @@
 import React, { useState } from 'react'
-import repoChoices from './repos'
+import RepoList from './RepoList'
 import './RepoSearch.css'
 import Auth from '../utils/auth'
 import axios from 'axios'
-
-const getFilteredRepos = (query, items) =>  {
-    if (!query) {
-        return items
-    }
-    return items.filter((repo) => repo.name.includes(query))
-}
 
 // fetch the JWT token from header
 // const getJwtFromHeader = () => {
@@ -33,38 +26,34 @@ const getFilteredRepos = (query, items) =>  {
 function RepoSearch() {
     Auth.login()
 
-    // const [query, setQuery] = useState('')
+    const [inputText, setInputText] = useState('')
 
-    // const { repos } = repoChoices
-    // const { repoItems } = repos
-    // const filteredRepos = getFilteredRepos(query, repoItems)
+    let inputHandler = (e) => {
+        //convert input text to lower case
+        var lowerCase = e.target.value.toLowerCase()
+        setInputText(lowerCase)
+    }
 
     return (
         <section className="repo-section">
             <h1>Choose a Github Repo</h1>
 
-            <div className="repo-search"> 
-              <label>
-                 <span className="visually-hidden">Search your repos</span>
-              </label>
-              <input 
-                    type="text" 
+            <div className="repo-search">
+                <label>
+                    <span className="visually-hidden">Search your repos</span>
+                </label>
+                <input
+                    type="text"
                     placeholder="Search your repos"
-                    onChange={e => setQuery(e.target.value)}
-               />
-              <button type="submit">Search</button>
+                    onChange={inputHandler}
+                />
 
-              <ul>
-                {filteredRepos.map( (repo)=>(
-                    <h6 key={repo.username}> {repo.name} </h6>
-                ) )}
-              </ul>
-
+                <ul>
+                    <RepoList input={inputText} />
+                </ul>
             </div>
-                        
-
         </section>
     )
 }
 
-export default RepoSearch;
+export default RepoSearch

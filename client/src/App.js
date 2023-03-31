@@ -47,7 +47,10 @@ function App() {
                         <Nav darkTheme={darkTheme} handleClick={handleClick} />
                         <Routes>
                             <Route path="/" element={<Home />}></Route>
-                            <Route path="/templates" element={<Templates />}></Route>
+                            <Route
+                                path="/templates"
+                                element={<Templates />}
+                            ></Route>
                             <Route
                                 path="/editor"
                                 element={<EditorPage darkTheme={darkTheme} />}
