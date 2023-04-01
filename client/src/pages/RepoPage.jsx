@@ -11,7 +11,6 @@ function RepoPage() {
     Auth.login()
     const token = localStorage.getItem('user')
     const [repos, setRepos] = useState([])
-    console.log(repos)
     useEffect(() => {
         if (!token) {
             return
@@ -45,7 +44,6 @@ function RepoPage() {
         fetchData()
     }, [])
     function onSelect(data) {
-        console.log(data)
         localStorage.setItem('repo', JSON.stringify(data))
         localStorage.setItem('textareaValue', '')
         return navigate('/templates')

@@ -7,7 +7,6 @@ const getRepositories = {
     type: new GraphQLList(GraphQLString),
 
     async resolve(_, __, { user }) {
-        console.log('got a request')
         // Check if the user is authenticated
         if (!user) {
             throw new AuthenticationError(
