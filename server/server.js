@@ -43,7 +43,6 @@ const server = new ApolloServer({
         }
     },
 })
-app.use(express.static(path.join(__dirname, '../client/build')))
 
 app.use(
     session({
@@ -66,16 +65,21 @@ app.use(express.json())
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use(express.static(path.join(__dirname, '../client/build')))
+
 app.use('/auth', authRouter)
 app.use('/api/image', imageRouter)
 app.use('/api/readme', readmeRouter)
 app.use('/api/repo', repoRouter)
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'))
 })
+
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/build')))
 }
+
 app.get('/', (req, res) => {
     res.sendFile('../client/build/index.html', { root: __dirname })
 })
