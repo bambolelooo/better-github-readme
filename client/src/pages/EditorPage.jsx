@@ -7,7 +7,7 @@ import axios from 'axios'
 import { debounce } from 'lodash'
 export default function EditorPage(props) {
     const token = localStorage.getItem('user')
-    const template = localStorage.getItem('template')
+    const template = JSON.parse(localStorage.getItem('template'))
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false)
     const [confirmLoading, setConfirmLoading] = useState(false)
@@ -24,8 +24,7 @@ export default function EditorPage(props) {
         saveToLocalStorage()
     }, [textareaValue])
 
-    const repositoryName = localStorage.getItem('repo')
-    console.log(repositoryName)
+    const repositoryName = JSON.parse(localStorage.getItem('repo'))
     useEffect(() => {
         if (template === 'Existing') {
             axios
@@ -44,12 +43,36 @@ export default function EditorPage(props) {
                 )
                 .then((response) => {
                     setTextareaValue(response.data.data.getReadmeContent)
+                    localStorage.setItem('template', JSON.stringify('Edit'))
                 })
                 .catch((error) => {
                     console.error(error)
                     // Handle the error
                 })
         } else if (template === 'Simple' || template === 'Advanced') {
+            console.log('axios')
+            axios
+                .post(
+                    `${process.env.REACT_APP_BACK_END_URL}/graphql`,
+                    {
+                        query: `query ($templateName: String!) { getTemplate(templateName: $templateName) }`,
+                        variables: { templateName: template },
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                )
+                .then((response) => {
+                    setTextareaValue(response.data.data.getTemplate)
+                    localStorage.setItem('template', JSON.stringify('Edit'))
+                })
+                .catch((error) => {
+                    console.error(error)
+                    // Handle the error
+                })
         }
     }, [])
     const [api, contextHolder] = notification.useNotification()
@@ -71,7 +94,6 @@ export default function EditorPage(props) {
 
     async function handlePost() {
         if (token) {
-            const repositoryName = 'publicTest'
             const text = textareaValue
 
             axios
@@ -93,11 +115,19 @@ export default function EditorPage(props) {
                     }
                 )
                 .then((response) => {
-                    console.log(response.data)
-                    openNotificationWithIcon('success')
-                    setTimeout(() => {
-                        setOpen(false)
-                    }, 500)
+                    console.log(response)
+                    if (response.data.errors && response.data.errors[0]) {
+                        openNotificationWithIcon(
+                            'error',
+                            'Error',
+                            `Some problem occurred: ${response.data.errors[0].message}`
+                        )
+                    } else {
+                        openNotificationWithIcon('success')
+                        setTimeout(() => {
+                            setOpen(false)
+                        }, 500)
+                    }
                 })
                 .catch((error) => {
                     console.log(error)

@@ -2,6 +2,7 @@ const { User, Readme, Snippet, Template } = require('../models')
 const updateReadmeMutation = require('./updateReadmeMutation')
 const getAllRepositories = require('./getAllRepositories')
 const getReadmeContent = require('./getReadmeContent')
+const getTemplate = require('./getTemplate')
 const resolvers = {
     Query: {
         user: async () => {
@@ -17,11 +18,7 @@ const resolvers = {
                 'snippetContent'
             )
         },
-        getTemplates: async (parent, { templateId }) => {
-            return Template.findOne({ _id: templateId }).populate(
-                'templateContent'
-            )
-        },
+        getTemplate: getTemplate,
     },
     Mutation: {
         SaveReadme: async (parent, { repoId, readmeContent }) => {

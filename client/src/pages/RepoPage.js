@@ -44,6 +44,7 @@ function RepoPage() {
     function onSelect(data) {
         console.log(data)
         localStorage.setItem('repo', JSON.stringify(data))
+        localStorage.setItem('textareaValue', '')
         return navigate('/templates')
     }
     return (

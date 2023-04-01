@@ -8,6 +8,7 @@ function Templates() {
     let navigate = useNavigate()
     const routeChange = (template) => {
         localStorage.setItem('template', JSON.stringify(template))
+        localStorage.setItem('textareaValue', '')
         let path = '/editor'
         navigate(path)
     }
