@@ -49,38 +49,44 @@ function RepoPage() {
     }
     return (
         <section className={styles.main}>
-            <h1>Choose a Repo</h1>
+            {Auth.loggedIn() ? (
+                <>
+                    <h1>Choose a Repo</h1>
 
-            <AutoComplete
-                placeholder="Search for repo"
-                style={{
-                    width: 304,
-                }}
-                filterOption={(inputValue, option) => {
-                    return (
-                        option.value
-                            .toUpperCase()
-                            .indexOf(inputValue.toUpperCase()) !== -1
-                    )
-                }}
-                options={repos}
-                onSelect={onSelect}
-            />
-            <List
-                bordered
-                dataSource={repos.map((repo) => repo.value)}
-                renderItem={(item) => (
-                    <List.Item
-                        className={styles.listItem}
-                        onClick={() => {
-                            onSelect(item)
+                    <AutoComplete
+                        placeholder="Search for repo"
+                        style={{
+                            width: 304,
                         }}
-                    >
-                        {item}
-                    </List.Item>
-                )}
-                className={styles.list}
-            />
+                        filterOption={(inputValue, option) => {
+                            return (
+                                option.value
+                                    .toUpperCase()
+                                    .indexOf(inputValue.toUpperCase()) !== -1
+                            )
+                        }}
+                        options={repos}
+                        onSelect={onSelect}
+                    />
+                    <List
+                        bordered
+                        dataSource={repos.map((repo) => repo.value)}
+                        renderItem={(item) => (
+                            <List.Item
+                                className={styles.listItem}
+                                onClick={() => {
+                                    onSelect(item)
+                                }}
+                            >
+                                {item}
+                            </List.Item>
+                        )}
+                        className={styles.list}
+                    />
+                </>
+            ) : (
+                <h1>Please login to use this feature</h1>
+            )}
         </section>
     )
 }
