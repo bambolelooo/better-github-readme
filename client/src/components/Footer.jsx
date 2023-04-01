@@ -8,7 +8,7 @@ function FooterSec() {
                 textAlign: 'center',
             }}
         >
-            Better GitHub Readme @2023 Created by BIG
+            Better GitHub Readme @2023 Created by BGR
         </Footer>
     )
 }
