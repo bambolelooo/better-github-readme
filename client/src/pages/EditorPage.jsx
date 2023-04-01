@@ -5,6 +5,8 @@ import TextEditor from '../components/TextEditor'
 import useUndoableState from '../hooks/useUndoaleState'
 import axios from 'axios'
 import { debounce } from 'lodash'
+import Auth from '../utils/auth'
+
 export default function EditorPage(props) {
     const token = localStorage.getItem('user')
     const template = JSON.parse(localStorage.getItem('template'))
@@ -185,44 +187,53 @@ export default function EditorPage(props) {
 
     return (
         <App>
-            {contextHolder}
-            <main className={styles.main}>
-                <section className={styles.snippetSection}>
-                    <Popconfirm
-                        title="Confirmation"
-                        description="Are you sure you want to post this ReadMe to GitHub?"
-                        open={open}
-                        onConfirm={handlePost}
-                        onCancel={showPopconfirm}
-                        okButtonProps={{ loading: confirmLoading }}
-                        okText={'Yes!'}
-                        cancelText={'Not yet'}
-                    >
-                        <Button onClick={showPopconfirm} loading={loading}>
-                            Post to GitHub
-                        </Button>
-                    </Popconfirm>
-                    <h3>Snippets</h3>
-                    {snippets.map((snippet, index) => (
-                        <Button
-                            type={'primary'}
-                            key={index}
-                            onClick={() => handleSnippet(snippet.value)}
-                        >
-                            {snippet.name}
-                        </Button>
-                    ))}
-                </section>
-                <section className={styles.textSection}>
-                    <TextEditor
-                        textareaValue={textareaValue}
-                        setTextareaValue={setTextareaValue}
-                        textareaRef={textareaRef}
-                        darkTheme={darkTheme}
-                        handleUndo={handleUndoRedo}
-                    />
-                </section>
-            </main>
+            {Auth.loggedIn() ? (
+                <>
+                    {contextHolder}
+                    <main className={styles.main}>
+                        <section className={styles.snippetSection}>
+                            <Popconfirm
+                                title="Confirmation"
+                                description="Are you sure you want to post this ReadMe to GitHub?"
+                                open={open}
+                                onConfirm={handlePost}
+                                onCancel={showPopconfirm}
+                                okButtonProps={{ loading: confirmLoading }}
+                                okText={'Yes!'}
+                                cancelText={'Not yet'}
+                            >
+                                <Button
+                                    onClick={showPopconfirm}
+                                    loading={loading}
+                                >
+                                    Post to GitHub
+                                </Button>
+                            </Popconfirm>
+                            <h3>Snippets</h3>
+                            {snippets.map((snippet, index) => (
+                                <Button
+                                    type={'primary'}
+                                    key={index}
+                                    onClick={() => handleSnippet(snippet.value)}
+                                >
+                                    {snippet.name}
+                                </Button>
+                            ))}
+                        </section>
+                        <section className={styles.textSection}>
+                            <TextEditor
+                                textareaValue={textareaValue}
+                                setTextareaValue={setTextareaValue}
+                                textareaRef={textareaRef}
+                                darkTheme={darkTheme}
+                                handleUndo={handleUndoRedo}
+                            />
+                        </section>
+                    </main>
+                </>
+            ) : (
+                <h1>Please login to use this feature</h1>
+            )}
         </App>
     )
 }
