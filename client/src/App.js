@@ -1,8 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-// import { ConfigProvider } from 'antd'
-import { ConfigProvider, theme, Switch, Card, Layout } from 'antd'
+import { ConfigProvider, theme, Layout } from 'antd'
 import * as darkThemeConfig from './dark_theme.json'
 import * as lightThemeConfig from './light_theme.json'
 import { useState } from 'react'
@@ -11,7 +10,6 @@ import Home from './pages/Home'
 import RepoPage from './pages/RepoPage'
 import Templates from './pages/Templates'
 import EditorPage from './pages/EditorPage'
-import RepoSearch from './pages/RepoSearch'
 
 function App() {
     const { defaultAlgorithm, darkAlgorithm } = theme

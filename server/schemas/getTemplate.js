@@ -8,7 +8,6 @@ const getTemplate = {
     },
 
     async resolve(_, { templateName }, __) {
-        console.log('got a request')
         // Check if the user is authenticated
         let content
         await Template.findOne({ templateName: templateName })

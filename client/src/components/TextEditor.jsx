@@ -18,8 +18,7 @@ export default function TextEditor(props) {
         const textarea = textareaRef.current
         const start = textarea.selectionStart
         const end = textarea.selectionEnd
-        console.log(start)
-        console.log(end)
+
         const selectedText = textarea.value.substring(start, end)
 
         const symbolBefore = symbols
@@ -43,7 +42,6 @@ export default function TextEditor(props) {
         }, 0)
     }
     function addSymbolsAtStart(symbols) {
-        console.log('adding symbols')
         const textarea = document.getElementById('text-editor')
         const start = textarea.selectionStart
         // find the start and end positions of the current line
@@ -65,12 +63,9 @@ export default function TextEditor(props) {
         }, 0)
     }
     const onChange = (value) => {
-        console.log(`selected ${value}`)
         setFont(value)
     }
-    const onSearch = (value) => {
-        console.log('search:', value)
-    }
+
     const handleDrop = (event) => {
         event.preventDefault()
         const file = Array.from(event.dataTransfer.files)[0]
@@ -110,9 +105,8 @@ export default function TextEditor(props) {
                     formData
                 )
                 .then((response) => {
-                    console.log(response)
                     const { filename, url } = response.data
-                    console.log(filename, url)
+
                     const startPos = textareaRef.current.selectionStart
                     const endPos = textareaRef.current.selectionEnd
                     const newText =
@@ -145,7 +139,6 @@ export default function TextEditor(props) {
                             defaultValue="JetBrains Mono"
                             optionFilterProp="children"
                             onChange={onChange}
-                            onSearch={onSearch}
                             filterOption={(input, option) =>
                                 (option?.label ?? '')
                                     .toLowerCase()
@@ -221,7 +214,7 @@ export default function TextEditor(props) {
                         components={{
                             h3: ({ node, ...props }) => {
                                 const child = node.children[0]
-                                console.log(node)
+
                                 return (
                                     <h3
                                         id={`${child.value

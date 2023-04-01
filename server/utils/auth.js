@@ -60,23 +60,18 @@ passport.use(
     )
 )
 
-// Redirect the user to Github for authentication
-// router.get('/auth/github', passport.authenticate('github'))
-
 // Github will redirect the user to this URL after authentication
 router.get(
     '/github/callback',
     passport.authenticate('github', { failureRedirect: '/' }),
     function (req, res) {
-        console.log('authing')
         // Successful authentication, redirect to dashboard.
-        // before deployment change this to /, configering heroku
+
         const token = req.user
-        // pass token in the header, and extract it in the frontend
-        // res.header('Authorization', auth)
+
         res.redirect(process.env.REACT_APP_FRONTEND_URL + '?token=' + token)
 
-        console.log('Success')
+        console.log('Successfully authenticated')
     }
 )
 
