@@ -17,15 +17,17 @@ const Nav = ({ darkTheme, handleClick }) => {
 
     return (
         <nav>
-            <img
-                alt="logo"
-                className="logo"
-                src={
-                    darkTheme
-                        ? require('../resources/logodark512.png')
-                        : require('../resources/logolight512.png')
-                }
-            />
+            <Link to="/">
+                <img
+                    alt="logo"
+                    className="logo"
+                    src={
+                        darkTheme
+                            ? require('../resources/logodark512.png')
+                            : require('../resources/logolight512.png')
+                    }
+                />
+            </Link>
             <Switch
                 defaultChecked={darkTheme}
                 checkedChildren={
