@@ -181,6 +181,11 @@ export default function EditorPage(props) {
     const snippets = [
         { name: 'Description', value: '## Description' },
         { name: 'Installation', value: '## Installation' },
+        { name: 'Usage', value: '## Usage' },
+        { name: 'Contributing', value: '## Contributing' },
+        { name: 'Tests', value: '## Tests' },
+        { name: 'License', value: '## License' },
+        { name: 'Questions', value: '## Questions' },
     ]
 
     return (
