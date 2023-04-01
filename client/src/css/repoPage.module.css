@@ -5,6 +5,7 @@
     align-items: center;
     gap: 10px;
     flex-direction: column;
+    padding-bottom: 20px;
 }
 .list {
     width: 66%;
@@ -16,7 +17,7 @@
 
 }
 .listItem:hover {
-    box-shadow: 0 0 2px #eee;
+    box-shadow: 0 0 2px #000;
     transition: all;
     transition-duration: 300ms;
 }

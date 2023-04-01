@@ -18,8 +18,6 @@ function App() {
     const [darkTheme, setDarkTheme] = useState(
         window.matchMedia('(prefers-color-scheme: dark)').matches
     )
-    const [repo, setRepo] = useState('')
-    const [template, setTemplate] = useState('Empty')
 
     const handleClick = () => {
         setDarkTheme(!darkTheme)

@@ -1,60 +1,105 @@
-import React from 'react';
-import '../App.css';
-import { Space, Card, Row, Col } from 'antd';
-import { useNavigate } from "react-router-dom";
+import React from 'react'
+import '../App.css'
+import { Space, Card, Row, Col } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import styles from '../css/templatesPage.module.css'
 
 function Templates() {
-
-    let navigate = useNavigate();
-    const routeChange = () => {
-        let path = '/editor';
-        navigate(path);
+    let navigate = useNavigate()
+    const routeChange = (template) => {
+        localStorage.setItem('template', JSON.stringify(template))
+        let path = '/editor'
+        navigate(path)
     }
 
     return (
-            <section className='templates-page'>
-                
-                <h1>Choose a Template</h1>
-                <div className='templates-containter'>
-                <Space>
-                    <Row align="middle" gutter={[8, 8]} >
-                    <Col span={8} />
-                    <Card hoverable={true} style={{ width: 325, height: 215, verticalAlign: 'middle'}} onClick={routeChange}>
+        <section className={styles.main}>
+            <h1>Choose a Template</h1>
+
+            <Row gutter={[0, 16]}>
+                <Col
+                    xs={24}
+                    sm={24}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    className={styles.col}
+                >
+                    <Card
+                        hoverable={true}
+                        className={styles.card}
+                        onClick={() => routeChange('Simple')}
+                    >
                         <h3>Simple</h3>
-                        <ul className='templates-ul'>
+                        <ul className="">
                             <li>Basic sections</li>
                             <li>MD best practices</li>
                             <li>Easy to maintain</li>
-                    </ul>
+                        </ul>
                     </Card>
-                    <Col span={0.5} />
-                    <Card hoverable={true} style={{ width: 325, height: 215, verticalAlign: 'middle' }} onClick={routeChange}>
+                </Col>
+                <Col
+                    xs={24}
+                    sm={24}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    className={styles.col}
+                >
+                    <Card
+                        hoverable={true}
+                        onClick={() => routeChange('Advanced')}
+                        className={styles.card}
+                    >
                         <h3>Advanced</h3>
-                        <ul className='templates-ul'>
+                        <ul className="">
                             <li>Basic sections and badges</li>
                             <li>Inline HTML</li>
                             <li>Has a place for everything</li>
-                    </ul>
+                        </ul>
                     </Card>
-                    <Col span={8} />
-                    <Card hoverable={true} style={{ width: 325, height: 215, verticalAlign: 'middle' }} onClick={routeChange}>
+                </Col>
+                <Col
+                    xs={24}
+                    sm={24}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    className={styles.col}
+                >
+                    <Card
+                        hoverable={true}
+                        onClick={() => routeChange('Empty')}
+                        className={styles.card}
+                    >
                         <h3>Empty</h3>
-                        <ul className='templates-ul'>
+                        <ul className="">
                             <li>Make a ReadMe yourself</li>
-                    </ul>
+                        </ul>
                     </Card>
-                    <Col span={0.5} />
-                    <Card hoverable={true} style={{ width: 325, height: 215, verticalAlign: 'middle' }} onClick={routeChange}>
+                </Col>
+                <Col
+                    xs={24}
+                    sm={24}
+                    md={12}
+                    lg={12}
+                    xl={12}
+                    className={styles.col}
+                >
+                    <Card
+                        hoverable={true}
+                        onClick={() => routeChange('Existing')}
+                        className={styles.card}
+                    >
                         <h3>Edit Existing</h3>
-                        <ul className='templates-ul'>
+                        <ul className="">
                             <li>Edit existing ReadMe file</li>
-                    </ul>
+                        </ul>
                     </Card>
-                    </Row>
-                </Space>
-                </div>
-            </section>
-    );
+                </Col>
+            </Row>
+        </section>
+    )
 }
 
-export default Templates;
+export default Templates
