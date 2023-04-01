@@ -3,7 +3,6 @@ import { Button, Select } from 'antd'
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
-import { useDropzone } from 'react-dropzone'
 import axios from 'axios'
 export default function TextEditor(props) {
     const {
@@ -13,9 +12,6 @@ export default function TextEditor(props) {
         darkTheme,
         handleUndo,
     } = props
-    const { getRootProps, getInputProps } = useDropzone({
-        onDrop: (acceptedFiles) => console.log(acceptedFiles),
-    })
     const [preview, setPreview] = useState(false)
     const [font, setFont] = useState('JetBrains Mono')
     function addSymbolsBeforeAndAfter(symbols) {
@@ -81,7 +77,10 @@ export default function TextEditor(props) {
         const formData = new FormData()
         formData.append('image', file)
         axios
-            .post('http://localhost:3001/api/image/upload', formData)
+            .post(
+                `${process.env.REACT_APP_BACK_END_URL}/api/image/upload`,
+                formData
+            )
             .then((response) => {
                 const { filename, url } = response.data
                 const startPos = textareaRef.current.selectionStart
@@ -106,7 +105,10 @@ export default function TextEditor(props) {
             const formData = new FormData()
             formData.append('image', file.getAsFile())
             axios
-                .post('http://localhost:3001/api/image/upload', formData)
+                .post(
+                    `${process.env.REACT_APP_BACK_END_URL}/api/image/upload`,
+                    formData
+                )
                 .then((response) => {
                     console.log(response)
                     const { filename, url } = response.data

@@ -42,3 +42,8 @@
 .textareaWrapper {
     width: 100%;
 }
+
+.textareaWrapper:focus {
+    outline: none;
+}
+

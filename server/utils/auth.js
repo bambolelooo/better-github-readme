@@ -58,9 +58,8 @@ passport.use(
 
                 const playload = {
                     user: {
-                        id: user.id,
-                        name: user.username,
-                        accessToken: accessToken,
+                        id: profile.id,
+                        name: profile.username,
                     },
                     exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
                 }
@@ -77,13 +76,14 @@ passport.use(
 )
 
 // Redirect the user to Github for authentication
-router.get('/auth/github', passport.authenticate('github'))
+// router.get('/auth/github', passport.authenticate('github'))
 
 // Github will redirect the user to this URL after authentication
 router.get(
     '/github/callback',
     passport.authenticate('github', { failureRedirect: '/' }),
     function (req, res) {
+        console.log('authing')
         // Successful authentication, redirect to dashboard.
         // before deployment change this to /, configering heroku
         const token = req.user
