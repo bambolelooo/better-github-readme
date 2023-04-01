@@ -52,7 +52,6 @@ export default function EditorPage(props) {
                     // Handle the error
                 })
         } else if (template === 'Simple' || template === 'Advanced') {
-            console.log('axios')
             axios
                 .post(
                     `/graphql`,
@@ -117,7 +116,6 @@ export default function EditorPage(props) {
                     }
                 )
                 .then((response) => {
-                    console.log(response)
                     if (response.data.errors && response.data.errors[0]) {
                         openNotificationWithIcon(
                             'error',
@@ -150,11 +148,11 @@ export default function EditorPage(props) {
             event.shiftKey
         ) {
             // Handle redo action
-            console.log('redo')
+
             redo()
         } else if ((event.ctrlKey || event.metaKey) && event.key === 'z') {
             // Handle undo action
-            console.log('undo')
+
             undo()
         }
     }

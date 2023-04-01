@@ -1,6 +1,6 @@
 import React from 'react'
 import '../App.css'
-import { Space, Card, Row, Col } from 'antd'
+import { Card, Row, Col } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import styles from '../css/templatesPage.module.css'
 import Auth from '../utils/auth'
