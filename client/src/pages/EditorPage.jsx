@@ -29,7 +29,7 @@ export default function EditorPage(props) {
         if (template === 'Existing') {
             axios
                 .post(
-                    `${process.env.REACT_APP_BACK_END_URL}/graphql`,
+                    `/graphql`,
                     {
                         query: `query ($repositoryName: String!) { getReadmeContent(repositoryName: $repositoryName) }`,
                         variables: { repositoryName },
@@ -53,7 +53,7 @@ export default function EditorPage(props) {
             console.log('axios')
             axios
                 .post(
-                    `${process.env.REACT_APP_BACK_END_URL}/graphql`,
+                    `/graphql`,
                     {
                         query: `query ($templateName: String!) { getTemplate(templateName: $templateName) }`,
                         variables: { templateName: template },
@@ -98,7 +98,7 @@ export default function EditorPage(props) {
 
             axios
                 .post(
-                    `${process.env.REACT_APP_BACK_END_URL}/graphql`,
+                    `/graphql`,
                     {
                         query: `
                             mutation($text: String!, $repositoryName: String!) {

@@ -10,7 +10,7 @@ const Nav = ({ darkTheme, handleClick }) => {
     const loginWithGithub = () => {
         window.location.assign(
             'https://github.com/login/oauth/authorize?client_id=' +
-                client_id +
+                'e4367ebcd4db452bc566' +
                 '&scope=repo&user'
         )
     }
