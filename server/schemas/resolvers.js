@@ -1,12 +1,14 @@
 const { User, Readme, Snippet, Template } = require('../models')
 const updateReadmeMutation = require('./updateReadmeMutation')
 const getAllRepositories = require('./getAllRepositories')
+const getReadmeContent = require('./getReadmeContent')
 const resolvers = {
     Query: {
         user: async () => {
             return User.findOne({}).populate('repos')
         },
         getRepositories: getAllRepositories,
+        getReadmeContent: getReadmeContent,
         getReadme: async (parent, { repoId }) => {
             return Readme.findOne({ _id: repoId })
         },

@@ -49,6 +49,7 @@ const typeDefs = gql`
         getSnippets: [Snippet]
         getTemplates: [Template]
         getRepositories: [Repository!]!
+        getReadmeContent(repositoryName: String!): String!
     }
 
     type Mutation {
