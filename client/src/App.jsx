@@ -10,6 +10,7 @@ import Home from './pages/Home'
 import RepoPage from './pages/RepoPage'
 import Templates from './pages/Templates'
 import EditorPage from './pages/EditorPage'
+import FooterSec from './components/Footer'
 
 function App() {
     const { defaultAlgorithm, darkAlgorithm } = theme
@@ -56,6 +57,7 @@ function App() {
                                 element={<EditorPage darkTheme={darkTheme} />}
                             ></Route>
                         </Routes>
+                        <FooterSec />
                     </BrowserRouter>
                 </Layout>
             </div>
