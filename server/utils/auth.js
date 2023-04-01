@@ -16,21 +16,6 @@ passport.deserializeUser((user, done) => {
     done(null, user)
 })
 
-//get user email from the github api
-const getUserEmail = async (accessToken) => {
-    const octokit = new Octokit({
-        auth: accessToken,
-    })
-
-    const response = await octokit.request('GET /user/emails', {
-        headers: {
-            'X-GitHub-Api-Version': '2022-11-28',
-        },
-    })
-
-    return response.data[0].email
-}
-
 // Configure passport with the Github strategy
 passport.use(
     new GitHubStrategy(
