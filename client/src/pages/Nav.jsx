@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import '../App.css'
-import { Switch } from 'antd'
+import { Switch, Button } from 'antd'
 import { BsMoonFill } from 'react-icons/bs'
 import { FaSun } from 'react-icons/fa'
 import Auth from '../utils/auth'
@@ -45,11 +45,13 @@ const Nav = ({ darkTheme, handleClick }) => {
             {Auth.loggedIn() ? (
                 <ul className="nav-ul nav-right">
                     <li>
-                        <Link to="/repo">Repo</Link>
+                        <Link to="/repo">
+                            <Button type={'primary'}>Get started</Button>
+                        </Link>
                     </li>
                     <li>
                         <Link onClick={Auth.logout} to="/">
-                            Logout
+                            <Button>Log Out</Button>
                         </Link>
                     </li>
                 </ul>
@@ -57,7 +59,7 @@ const Nav = ({ darkTheme, handleClick }) => {
                 <ul className="nav-ul nav-right">
                     <li>
                         <Link onClick={loginWithGithub} to="/auth/github">
-                            Login
+                            <Button>Log In</Button>
                         </Link>
                     </li>
                 </ul>
