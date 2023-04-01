@@ -11,7 +11,7 @@ const getReadmeContent = {
 
     async resolve(_, { repositoryName }, { user }) {
         console.log('got a request')
-        const repoName = repositoryName.slice(1, -1)
+        const repoName = repositoryName
         // Check if the user is authenticated
         if (!user) {
             throw new AuthenticationError(
