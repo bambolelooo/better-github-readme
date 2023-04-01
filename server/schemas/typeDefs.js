@@ -15,6 +15,11 @@ const typeDefs = gql`
         repoLink: String
     }
 
+    type Repository {
+        name: String!
+        url: String!
+    }
+
     type Readme {
         _id: ID
         repoId: ID
@@ -43,6 +48,9 @@ const typeDefs = gql`
         getReadme(repoId: ID!): Readme
         getSnippets: [Snippet]
         getTemplates: [Template]
+        getRepositories: [Repository!]!
+        getReadmeContent(repositoryName: String!): String!
+        getTemplate(templateName: String!): String!
     }
 
     type Mutation {

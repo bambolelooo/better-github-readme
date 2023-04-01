@@ -4,18 +4,77 @@ import styles from '../css/editorPage.module.css'
 import TextEditor from '../components/TextEditor'
 import useUndoableState from '../hooks/useUndoaleState'
 import axios from 'axios'
+import { debounce } from 'lodash'
 export default function EditorPage(props) {
+    const token = localStorage.getItem('user')
+    const template = JSON.parse(localStorage.getItem('template'))
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false)
     const [confirmLoading, setConfirmLoading] = useState(false)
+    const {
+        state: textareaValue,
+        setState: setTextareaValue,
+        goBack: undo,
+        goForward: redo,
+    } = useUndoableState(localStorage.getItem('textareaValue') || '')
+    useEffect(() => {
+        const saveToLocalStorage = debounce(() => {
+            localStorage.setItem('textareaValue', textareaValue)
+        }, 1000)
+        saveToLocalStorage()
+    }, [textareaValue])
 
-    // const openNotification = (message, description) => {
-    //     notification.open({
-    //         message: message || 'Success',
-    //         description:
-    //             description || 'Successfully edited readme on your repository',
-    //     })
-    // }
+    const repositoryName = JSON.parse(localStorage.getItem('repo'))
+    useEffect(() => {
+        if (template === 'Existing') {
+            axios
+                .post(
+                    `${process.env.REACT_APP_BACK_END_URL}/graphql`,
+                    {
+                        query: `query ($repositoryName: String!) { getReadmeContent(repositoryName: $repositoryName) }`,
+                        variables: { repositoryName },
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                )
+                .then((response) => {
+                    setTextareaValue(response.data.data.getReadmeContent)
+                    localStorage.setItem('template', JSON.stringify('Edit'))
+                })
+                .catch((error) => {
+                    console.error(error)
+                    // Handle the error
+                })
+        } else if (template === 'Simple' || template === 'Advanced') {
+            console.log('axios')
+            axios
+                .post(
+                    `${process.env.REACT_APP_BACK_END_URL}/graphql`,
+                    {
+                        query: `query ($templateName: String!) { getTemplate(templateName: $templateName) }`,
+                        variables: { templateName: template },
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                )
+                .then((response) => {
+                    setTextareaValue(response.data.data.getTemplate)
+                    localStorage.setItem('template', JSON.stringify('Edit'))
+                })
+                .catch((error) => {
+                    console.error(error)
+                    // Handle the error
+                })
+        }
+    }, [])
     const [api, contextHolder] = notification.useNotification()
 
     const openNotificationWithIcon = (type, message, description) => {
@@ -30,20 +89,11 @@ export default function EditorPage(props) {
         setOpen(!open)
     }
 
-    const {
-        state: textareaValue,
-        setState: setTextareaValue,
-        goBack: undo,
-        goForward: redo,
-    } = useUndoableState('')
     const { darkTheme } = props
     const textareaRef = useRef(null)
 
-    const token = localStorage.getItem('user')
-
     async function handlePost() {
         if (token) {
-            const repositoryName = 'publicTest'
             const text = textareaValue
 
             axios
@@ -65,11 +115,19 @@ export default function EditorPage(props) {
                     }
                 )
                 .then((response) => {
-                    console.log(response.data)
-                    openNotificationWithIcon('success')
-                    setTimeout(() => {
-                        setOpen(false)
-                    }, 500)
+                    console.log(response)
+                    if (response.data.errors && response.data.errors[0]) {
+                        openNotificationWithIcon(
+                            'error',
+                            'Error',
+                            `Some problem occurred: ${response.data.errors[0].message}`
+                        )
+                    } else {
+                        openNotificationWithIcon('success')
+                        setTimeout(() => {
+                            setOpen(false)
+                        }, 500)
+                    }
                 })
                 .catch((error) => {
                     console.log(error)
