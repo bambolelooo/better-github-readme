@@ -9,15 +9,6 @@ const userSchema = new Schema(
             required: true,
             max_length: 50,
         },
-        email: {
-            type: String,
-            required: false,
-            unique: true,
-            match: [
-                /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                'Please enter a valid email address',
-            ],
-        },
         accessToken: {
             type: String,
             required: true,
