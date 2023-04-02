@@ -1,4 +1,4 @@
-import { App, Button, notification, Popconfirm } from 'antd'
+import { App, Button, notification, Popconfirm, Space } from 'antd'
 import { useState, useRef, useEffect } from 'react'
 import styles from '../css/editorPage.module.css'
 import TextEditor from '../components/TextEditor'
@@ -79,10 +79,22 @@ export default function EditorPage(props) {
     const [api, contextHolder] = notification.useNotification()
 
     const openNotificationWithIcon = (type, message, description) => {
+        const donationPage = () => {
+            window.location.href = `https://donate.stripe.com/test_aEU9BT3Zpd6z6LCbII`
+        }
+        const btn = (
+            <Space>
+                <Button type="primary" size="small" onClick={donationPage}>
+                    Donate
+                </Button>
+            </Space>
+        )
         api[type]({
             message: message || 'Success',
             description:
-                description || 'Successfully edited readme on your repository',
+                description ||
+                'Your ReadMe has been successfully pushed to Github. Would you like to make a donation to keep our site going?',
+            btn,
         })
     }
 
