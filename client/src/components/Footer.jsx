@@ -4,6 +4,7 @@ const { Footer } = Layout
 function FooterSec() {
     return (
         <Footer
+            className="footer-section"
             style={{
                 textAlign: 'center',
             }}
