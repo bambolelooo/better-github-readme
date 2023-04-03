@@ -216,6 +216,7 @@ export default function TextEditor(props) {
                                 const child = node.children[0]
 
                                 return (
+                                    // eslint-disable-next-line jsx-a11y/heading-has-content
                                     <h3
                                         id={`${child.value
                                             .toLowerCase()
@@ -227,6 +228,7 @@ export default function TextEditor(props) {
                             h2: ({ node, ...props }) => {
                                 const child = node.children[0]
                                 return (
+                                    // eslint-disable-next-line jsx-a11y/heading-has-content
                                     <h2
                                         id={`${child.value
                                             .toLowerCase()
@@ -238,6 +240,7 @@ export default function TextEditor(props) {
                             h1: ({ node, ...props }) => {
                                 const child = node.children[0]
                                 return (
+                                    // eslint-disable-next-line jsx-a11y/heading-has-content
                                     <h1
                                         id={`${child.value
                                             .toLowerCase()
