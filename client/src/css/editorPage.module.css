@@ -9,7 +9,8 @@
     display: flex;
     justify-content: center;
     padding: 30px;
-    gap: 15px
+    padding-bottom: 80px;
+    gap: 15px;
 }
 .textSection {
     width: 100%;
