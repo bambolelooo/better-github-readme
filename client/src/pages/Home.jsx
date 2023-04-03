@@ -4,7 +4,7 @@ import { Card } from 'antd'
 
 function Home() {
     return (
-        <section className="home-page" style={{ paddingBottom: `60px` }}>
+        <section className="home-page">
             <h1>Better GitHub ReadMe</h1>
             <h2>Welcome to Better Github ReadMe or BGR for short!</h2>
             <br />
