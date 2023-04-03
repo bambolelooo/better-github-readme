@@ -15,7 +15,7 @@ import FooterSec from './components/Footer'
 function App() {
     const { defaultAlgorithm, darkAlgorithm } = theme
     const [darkTheme, setDarkTheme] = useState(
-        localStorage.getItem(darkTheme)
+        localStorage.getItem('darkTheme')
             ? JSON.parse(localStorage.getItem('darkTheme'))
             : window.matchMedia('(prefers-color-scheme: dark)').matches
     )
