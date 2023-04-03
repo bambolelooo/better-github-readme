@@ -54,6 +54,7 @@ function RepoPage({ darkTheme }) {
         }
 
         fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     function onSelect(data) {
         localStorage.setItem('repo', JSON.stringify(data))

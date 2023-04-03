@@ -10,9 +10,7 @@ import Auth from '../utils/auth'
 export default function EditorPage(props) {
     const token = localStorage.getItem('user')
     const template = JSON.parse(localStorage.getItem('template'))
-    const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false)
-    const [confirmLoading, setConfirmLoading] = useState(false)
     const {
         state: textareaValue,
         setState: setTextareaValue,
@@ -75,6 +73,7 @@ export default function EditorPage(props) {
                     // Handle the error
                 })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const [api, contextHolder] = notification.useNotification()
 
@@ -213,13 +212,11 @@ export default function EditorPage(props) {
                                 open={open}
                                 onConfirm={handlePost}
                                 onCancel={showPopconfirm}
-                                okButtonProps={{ loading: confirmLoading }}
                                 okText={'Yes!'}
                                 cancelText={'Not yet'}
                             >
                                 <Button
                                     onClick={showPopconfirm}
-                                    loading={loading}
                                 >
                                     Post to GitHub
                                 </Button>
