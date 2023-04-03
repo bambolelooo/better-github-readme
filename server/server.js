@@ -10,7 +10,6 @@ const passport = require('passport')
 const authRouter = require('./utils/auth')
 const imageRouter = require('./utils/image')
 const readmeRouter = require('./utils/postReadme')
-const repoRouter = require('./utils/getRepo')
 const session = require('express-session')
 const jwt = require('jsonwebtoken')
 
@@ -70,7 +69,6 @@ app.use(express.static(path.join(__dirname, '../client/build')))
 app.use('/auth', authRouter)
 app.use('/api/image', imageRouter)
 app.use('/api/readme', readmeRouter)
-app.use('/api/repo', repoRouter)
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'))

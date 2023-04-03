@@ -1,7 +1,6 @@
 import jwt_decode from 'jwt-decode'
 class AuthService {
     login() {
-        console.log('logging in')
         const urlParams = new URLSearchParams(window.location.search)
         const token = urlParams.get('token')
         if (token) {
@@ -21,7 +20,7 @@ class AuthService {
 
     loggedIn() {
         const token = this.getToken()
-        return token ? true : false
+        return !!token && !this.isTokenExpired(token)
     }
 
     getAccessToken() {

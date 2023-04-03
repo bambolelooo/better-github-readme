@@ -9,8 +9,6 @@ const updateReadmeMutation = {
         repositoryName: { type: new GraphQLNonNull(GraphQLString) },
     },
     async resolve(_, { text, repositoryName }, { user }) {
-        console.log('got a request')
-        console.log(repositoryName)
         // Check if the user is authenticated
         if (!user) {
             throw new AuthenticationError(
@@ -25,7 +23,7 @@ const updateReadmeMutation = {
                     // Handle error: User not found
                 } else {
                     accessToken = user.accessToken
-                    console.log(accessToken)
+
                     // Use the access token as needed
                 }
             })
@@ -67,7 +65,6 @@ const updateReadmeMutation = {
                     },
                 }
             )
-            console.log(response)
         } catch (e) {
             console.log(e)
         }
