@@ -79,13 +79,10 @@ export default function TextEditor(props) {
             .then((response) => {
                 const { filename, url } = response.data
                 const startPos = textareaRef.current.selectionStart
-                const endPos = textareaRef.current.selectionEnd
                 const newText =
                     textareaValue.substring(0, startPos) +
-                    '\n' +
-                    `![${filename}](${url})` +
-                    textareaValue.substring(endPos, textareaValue.length) +
-                    '\n'
+                    `\n![${filename}](${url})\n` +
+                    textareaValue.substring(startPos, textareaValue.length)
                 setTextareaValue(newText)
             })
             .catch((error) => {
@@ -97,6 +94,7 @@ export default function TextEditor(props) {
         const items = Array.from(event.clipboardData.items)
         const file = items.find((item) => item.kind === 'file')
         if (file) {
+            event.preventDefault()
             const formData = new FormData()
             formData.append('image', file.getAsFile())
             axios
@@ -106,15 +104,12 @@ export default function TextEditor(props) {
                 )
                 .then((response) => {
                     const { filename, url } = response.data
-
                     const startPos = textareaRef.current.selectionStart
-                    const endPos = textareaRef.current.selectionEnd
+                    console.log(textareaValue)
                     const newText =
                         textareaValue.substring(0, startPos) +
-                        '\n' +
-                        `![${filename}](${url})` +
-                        textareaValue.substring(endPos, textareaValue.length) +
-                        '\n'
+                        `\n![${filename}](${url})\n` +
+                        textareaValue.substring(startPos, textareaValue.length)
                     setTextareaValue(newText)
                 })
                 .catch((error) => {
