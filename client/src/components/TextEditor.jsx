@@ -105,7 +105,6 @@ export default function TextEditor(props) {
                 .then((response) => {
                     const { filename, url } = response.data
                     const startPos = textareaRef.current.selectionStart
-                    console.log(textareaValue)
                     const newText =
                         textareaValue.substring(0, startPos) +
                         `\n![${filename}](${url})\n` +
