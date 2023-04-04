@@ -9,6 +9,7 @@ import Auth from '../utils/auth'
 
 export default function EditorPage(props) {
     const token = localStorage.getItem('user')
+    const username = JSON.parse(atob(token.split('.')[1])).user.name
     const template = JSON.parse(localStorage.getItem('template'))
     const [open, setOpen] = useState(false)
     const {
@@ -65,7 +66,14 @@ export default function EditorPage(props) {
                     }
                 )
                 .then((response) => {
-                    setTextareaValue(response.data.data.getTemplate)
+                    setTextareaValue(
+                        response.data.data.getTemplate
+                            .replace(/github_username/g, username)
+                            .replace(
+                                /repo_name/g,
+                                JSON.parse(localStorage.getItem('repo'))
+                            )
+                    )
                     localStorage.setItem('template', JSON.stringify('Edit'))
                 })
                 .catch((error) => {
@@ -215,9 +223,7 @@ export default function EditorPage(props) {
                                 okText={'Yes!'}
                                 cancelText={'Not yet'}
                             >
-                                <Button
-                                    onClick={showPopconfirm}
-                                >
+                                <Button onClick={showPopconfirm}>
                                     Post to GitHub
                                 </Button>
                             </Popconfirm>
